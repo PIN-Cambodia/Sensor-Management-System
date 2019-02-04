@@ -42,8 +42,7 @@
 
             .content {
                 text-align: center;
-                /*hello world
-                testddd*/
+                /*hello*/
             }
 
             .title {
