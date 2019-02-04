@@ -42,8 +42,6 @@
 
             .content {
                 text-align: center;
-                /*hello world
-                testddd*/
             }
 
             .title {
