@@ -15,6 +15,8 @@
 @stop
 
 @section('content')
+
+
     <div class="page-content edit-add container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -83,6 +85,9 @@
                         <div class="panel-footer">
                             <button type="submit" class="btn btn-primary save">{{ __('voyager::generic.save') }}</button>
                         </div>
+
+
+
                     </form>
 
                     <iframe id="form_target" name="form_target" style="display:none"></iframe>
@@ -98,6 +103,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="modal fade modal-danger" id="confirm_delete_modal">
         <div class="modal-dialog">
@@ -125,6 +132,10 @@
 
 @section('javascript')
     <script>
+
+        $('input[type=text],textarea').prop('readonly', true);
+       
+
         var params = {};
         var $file;
 
