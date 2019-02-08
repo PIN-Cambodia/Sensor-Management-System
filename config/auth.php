@@ -41,9 +41,15 @@ return [
             'provider' => 'users',
         ],
 
+<<<<<<< HEAD
        'api' => [
         'driver' => 'passport',
         'provider' => 'users',
+=======
+        'api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+>>>>>>> 7e717b36d033bec51a2fa0ab28a6b7d748af7063
         ],
     ],
 

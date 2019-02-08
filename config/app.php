@@ -180,6 +180,10 @@ return [
         Optimus\ApiConsumer\Provider\LaravelServiceProvider::class,
       
 
+
+        Optimus\ApiConsumer\Provider\LaravelServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+
     ],
 
     /*

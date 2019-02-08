@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use \DateTime;
+use Validator;
 
+use \DateTime;
 use App\Location;
 use App\Datapoint;
 use App\Sensor;
@@ -13,15 +14,7 @@ class SensorInfoController extends Controller
 {
 
 
-    public $successStatus=200;
-
-    public function index()
-    {
-
-        return response()->json(['name'=>'Location','mobile'=>'888888','email'=>'sopheakyong@gmail.com','status'=>0]);
-    }
-
-    public function getLocation(Request $request)
+  public function getLocation(Request $request)
     {
         if($request->type==null)
              $location=Location::all();
@@ -30,6 +23,9 @@ class SensorInfoController extends Controller
 
         return response()->json($location);
     }
+
+
+    /* get information of Sensor datapoint */
 
     public function getSensorDatapoint(Request $request){
 
@@ -61,25 +57,34 @@ class SensorInfoController extends Controller
 
 
 
-
-    public function postDatapoint(Request $request)
+    /* post datapoint */
+    public function createDatapoint(Request $request)
     {     
 
-       $datapoint=new Datapoint();
-       $datapoint->sensor_id=$request->sensor_id;
-       $datapoint->location_id=$request->location_id;
-       $datapoint->data=$request->data;
-       $datapoint.save();
-       return response()->json($datapoint);
+       $arrdata=
+                [
+                 'sensor_id'=>$request->sensor_id,
+                 'location_id'=>$request->location_id,
+                 'data'=>$request->data
+                 ];
 
+
+         $validator = Validator::make($request->all(), [
+              'sensor_id' => 'required',
+              'location_id' => 'required'
+                ]);
+
+          if ($validator->fails()) {
+              return response()->json(['status'=>false,'message'=>$validator->messages()]);
+          }
+
+          else{
+                  $datapoint=Datapoint::create($arrdata);        
+                  return response()->json(['status'=>true,'message'=>"Record created successfully",'data'=>$arrdata]);
+          }
 
     }
 
-
-    public function updateSensor(Request $request)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -88,9 +93,34 @@ class SensorInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateSensor(Request $request, $id)
     {
-        //
+       $arrdata=
+                [
+                 'external_id'=>$request->external_id,
+                 'type'=>$request->type,
+                 'parameters'=>$request->parameters
+                 ];
+
+
+        $validator = Validator::make($request->all(), [
+              'external_id' => 'required',
+              'type' => 'required'
+                ]);
+
+          if ($validator->fails()) {
+              return response()->json(['status'=>false,'message'=>$validator->messages()]);
+          }
+
+          else
+          {
+                $sensor=Sensor::find($id);
+                $sensor->update($arrdata);        
+                return response()->json(['status'=>true,'message'=>"Record updated successfully",'data'=>$arrdata]);
+          }   
+
+
+
     }
 
     /**
