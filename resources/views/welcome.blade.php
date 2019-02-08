@@ -42,7 +42,6 @@
 
             .content {
                 text-align: center;
-                /*hello*/
             }
 
             .title {

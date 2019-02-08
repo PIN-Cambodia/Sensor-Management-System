@@ -24,4 +24,4 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/usertoken', 'TokenController@index')->name('usertoken');
+// Route::get('/usertoken', 'TokenController@index')->name('usertoken');
