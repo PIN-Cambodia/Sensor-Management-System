@@ -38,13 +38,9 @@ public function generateToken($username,$password)
     {
         $data = [
                     'grant_type' => 'password',
-<<<<<<< HEAD
+
                     'client_id' => '6',
                     'client_secret' => '3ZjzkCldAyTeGndUIHCSfUjmWvhxJhfKahcBpvem',
-=======
-                    'client_id' => '2',
-                    'client_secret' => '4Nl8DahpbotBNYzLNrJsx6iM9SAXaZFU726sSHMr',
->>>>>>> 7e717b36d033bec51a2fa0ab28a6b7d748af7063
                     'username' => $username,
                     'password' => $password
                  ];
@@ -391,10 +387,7 @@ public function generateToken($username,$password)
        
 
         $user=User::find($request->user_id);
-<<<<<<< HEAD
-=======
 
->>>>>>> 7e717b36d033bec51a2fa0ab28a6b7d748af7063
       //  dd($user);
         $email=$user->email;
         $password=$user->password;
