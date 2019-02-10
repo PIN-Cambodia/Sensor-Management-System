@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -59,7 +60,11 @@ class SensorInfoController extends Controller
 
     /* post datapoint */
     public function createDatapoint(Request $request)
-    {     
+    { 
+
+       if(!Gate::allows('add_datapoints')){
+           return response()->json(['status'=>false,'message'=>'You have no permission']);
+       }
 
        $arrdata=
                 [
