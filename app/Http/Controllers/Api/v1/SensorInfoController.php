@@ -100,6 +100,13 @@ class SensorInfoController extends Controller
      */
     public function updateSensor(Request $request, $id)
     {
+
+       if(!Gate::allows('edit_sensors')){
+           return response()->json(['status'=>false,'message'=>'You have no permission']);
+       }
+
+
+      
        $arrdata=
                 [
                  'external_id'=>$request->external_id,
