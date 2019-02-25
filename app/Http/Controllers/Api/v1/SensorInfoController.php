@@ -145,4 +145,11 @@ class SensorInfoController extends Controller
     {
         //
     }
+
+    /* for display sensor in select box in page location */
+
+    public function getSensor($type){
+      $sensor=\DB::table("sensors")->where("type",$type)->pluck("external_id","id");
+      return json_encode($sensor);
+    }
 }
