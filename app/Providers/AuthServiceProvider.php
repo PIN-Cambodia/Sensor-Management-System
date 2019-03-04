@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+use App\Permission;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -28,24 +30,25 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $user=\Auth::user();
-              $roles=Role::with('permission')->get();
-              foreach($roles as $role){
-                    foreach($role->permission as $permission){
-                        $permissionArray[$permission->key][]=$role->id;
-                    }
-              }
 
+        // This check allows us to run composer installation etc before the db has been created
+        if (Schema::hasTable(with(new Role())->getTable()) ) {
+            $roles = Role::with('permission')->get();
+            foreach ($roles as $role) {
+                foreach ($role->permission as $permission) {
+                    $permissionArray[$permission->key][] = $role->id;
+                }
+            }
 
-              foreach($permissionArray as $key=>$roles){
-                    Gate::define($key, function(User $user) use ($roles){
-                        return count(array_intersect($user->role()->pluck('id')->toArray(),$roles));
-                    });
-              }
+            foreach (Permission::with('roles')->get() as $key => $roles) {
+                Gate::define($key, function (User $user) use ($roles) {
+                    return count(array_intersect($user->role()->pluck('id')->toArray(), $roles));
+                });
+            }
+        }
 
-
-      Passport::routes();
-      Passport::tokensExpireIn(now()->addYears(18));
-      Passport::refreshTokensExpireIn(now()->addYears(18));
+        Passport::routes();
+        Passport::tokensExpireIn(now()->addYears(18));
+        Passport::refreshTokensExpireIn(now()->addYears(18));
     }
 }
