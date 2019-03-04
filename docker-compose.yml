@@ -13,6 +13,7 @@ services:
       DB_HOST: db
       DB_PORT: 3306
       DB_DATABASE: app
+      DB_TEST_DATABASE: app_test
       DB_USERNAME: app
       DB_PASSWORD: secret
     volumes:

@@ -8,11 +8,13 @@ addons:
 
 before_script:
   - cp .env.travis .env
-  - mysql -e 'create database homestead_test;'
+  - mysql -e 'create database app_test;'
   - composer self-update
   - composer install --no-interaction
   - php artisan key:generate
   - php artisan migrate --step
+  - php artisan passport:install
+  - php artisan voyager:install
 
 script:
   - vendor/bin/phpunit
