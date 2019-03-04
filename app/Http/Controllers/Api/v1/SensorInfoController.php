@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Validator;
 
@@ -59,7 +60,11 @@ class SensorInfoController extends Controller
 
     /* post datapoint */
     public function createDatapoint(Request $request)
-    {     
+    { 
+
+       if(!Gate::allows('add_datapoints')){
+           return response()->json(['status'=>false,'message'=>'You have no permission']);
+       }
 
        $arrdata=
                 [
@@ -95,6 +100,13 @@ class SensorInfoController extends Controller
      */
     public function updateSensor(Request $request, $id)
     {
+
+       if(!Gate::allows('edit_sensors')){
+           return response()->json(['status'=>false,'message'=>'You have no permission']);
+       }
+
+
+      
        $arrdata=
                 [
                  'external_id'=>$request->external_id,
@@ -132,5 +144,12 @@ class SensorInfoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /* for display sensor in select box in page location */
+
+    public function getSensor($type){
+      $sensor=\DB::table("sensors")->where("type",$type)->pluck("external_id","id");
+      return json_encode($sensor);
     }
 }
