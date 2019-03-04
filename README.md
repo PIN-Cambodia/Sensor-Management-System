@@ -1,5 +1,7 @@
 # Sensor Management System
 
+[![Build Status](https://travis-ci.org/PIN-Cambodia/Sensor-Management-System.svg?branch=master)](https://travis-ci.org/PIN-Cambodia/Sensor-Management-System)
+
 This system is a basic information management system / middelware for IoT devices. It is based on Laravel, and includes 
 3 basic functionalities:
 
