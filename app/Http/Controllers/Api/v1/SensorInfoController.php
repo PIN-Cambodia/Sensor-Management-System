@@ -70,7 +70,10 @@ class SensorInfoController extends Controller
                 [
                  'sensor_id'=>$request->sensor_id,
                  'location_id'=>$request->location_id,
-                 'data'=>$request->data
+                 'data'=>$request->data,
+                 'sensor_height'=>$request->sensor_height,
+                 'distance_report'=>$request->distance_report,
+                 'water_height'=>$request->water_height
                  ];
 
 
