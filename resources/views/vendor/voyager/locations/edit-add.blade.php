@@ -229,9 +229,19 @@
 
 
 
+$("input[placeholder],textarea,select").each(function () {
+      // $(this).attr("data-placeholder", this.placeholder);
+         this.placeholder = '';
+    });
 
 
 
+
+
+
+
+
+/* Voyager function */
         var params = {};
         var $file;
 
