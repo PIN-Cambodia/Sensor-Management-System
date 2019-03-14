@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2622d2882ba0bf7c2a92e3182f3724d",
+    "content-hash": "3124239825c18e93d795a4330c837144",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -867,6 +867,59 @@
                 "schedule"
             ],
             "time": "2018-06-06T03:12:17+00:00"
+        },
+        {
+            "name": "drudge-rajen/voyager-deployment-orchestrator",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DrudgeRajen/voyager-deployment-orchestrator.git",
+                "reference": "74d42df9092c83891f09de908620a5f2fdfa4520"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DrudgeRajen/voyager-deployment-orchestrator/zipball/74d42df9092c83891f09de908620a5f2fdfa4520",
+                "reference": "74d42df9092c83891f09de908620a5f2fdfa4520",
+                "shasum": ""
+            },
+            "require": {
+                "tcg/voyager": "^1.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.9@dev"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DrudgeRajen\\VoyagerDeploymentOrchestrator\\VoyagerDeploymentOrchestratorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DrudgeRajen\\VoyagerDeploymentOrchestrator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rajendra Sharma",
+                    "email": "drudge.rajan@gmail.com"
+                }
+            ],
+            "description": "Package for Voyager BREAD Deployment.",
+            "keywords": [
+                "bread-seeder",
+                "laravel",
+                "voyager",
+                "voyager-deployment",
+                "voyager-seeder"
+            ],
+            "time": "2019-03-13T16:50:25+00:00"
         },
         {
             "name": "egulias/email-validator",
