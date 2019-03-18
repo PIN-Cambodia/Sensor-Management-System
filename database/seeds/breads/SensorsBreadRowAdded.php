@@ -77,7 +77,7 @@ class SensorsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{"placeholder":"","title":"Welcom"}',
+                    'details' => '{"placeholder":""}',
                     'order' => 4,
                 ],
                 4 => 
