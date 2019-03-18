@@ -19,10 +19,10 @@ class CreateSensorsTable extends Migration
                 $table->increments('id');
                 $table->string('external_id');
                 $table->string('type');
-                $table->string('parameters');
-                $table->string('firmware_version');
-                $table->string('hardware_version');
-                $table->string('hardware_des');               
+                $table->string('parameters')->nullable();
+                $table->string('firmware_version')->nullable();
+                $table->string('hardware_version')->nullable();
+                $table->string('hardware_des')->nullable();               
                 $table->timestamp('last_boot')->nullable();
                 $table->timestamp('created_at')->nullable();
                 $table->timestamp('updated_at')->nullable();
