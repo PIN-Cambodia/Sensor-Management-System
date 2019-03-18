@@ -143,8 +143,7 @@
      $(document).ready(function() {
 
           
-
-            
+          
 
                 $('*[class*="form-control"]').each(function () {
                   
