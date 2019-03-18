@@ -31,11 +31,7 @@ class CreateLocationsTable extends Migration
                 $table->string('status');
                 $table->timestamp('created_at')->nullable();
                 $table->timestamp('updated_at')->nullable();
-                $table->timestamp('deleted_at')->nullable();   
-
-                $table->string('comment_kh')->nullable();
-                $table->string('comment_en')->nullable();
-
+                $table->timestamp('deleted_at')->nullable();
             });
         }
 
