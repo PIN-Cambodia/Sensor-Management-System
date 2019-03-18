@@ -6,7 +6,7 @@ use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Models\MenuItem;
 
-class DatapointsBreadTypeAdded extends Seeder
+class UsertokensBreadTypeAdded extends Seeder
 {
     /**
      * Auto generated seed file
@@ -20,61 +20,45 @@ class DatapointsBreadTypeAdded extends Seeder
         try {
             \DB::beginTransaction();
 
-            $dataType = DataType::where('name' , 'datapoints')->first();
+            $dataType = DataType::where('name' , 'usertokens')->first();
 
             if (is_bread_translatable($dataType)) {
                 $dataType->deleteAttributeTranslations($dataType->getTranslatableAttributes());
             }
 
             if ($dataType) {
-                DataType::where('name', 'datapoints')->delete();
+                DataType::where('name', 'usertokens')->delete();
             }
 
             \DB::table('data_types')->insert([
-                'name' => 'datapoints',
-<<<<<<< HEAD
-                'display_name_singular' => 'Datapoint',
-                'display_name_plural' => 'Datapoints',
-                'slug' => 'datapoints',
+                'name' => 'usertokens',
+                'slug' => 'usertokens',
+                'display_name_singular' => 'Usertoken',
+                'display_name_plural' => 'Usertokens',
                 'icon' => NULL,
-                'model_name' => 'App\\Datapoint',
-                'controller' => NULL,
+                'model_name' => 'App\\Usertoken',
                 'policy_name' => NULL,
-                'generate_permissions' => 1,
-                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
-                'description' => NULL,
-                'server_side' => 0,
-                'updated_at' => '2019-03-14 08:50:30',
-                'created_at' => '2019-03-14 08:50:30',
-=======
-                'slug' => 'datapoints',
-                'display_name_singular' => 'Datapoint',
-                'display_name_plural' => 'Datapoints',
-                'icon' => NULL,
-                'model_name' => 'App\\Datapoint',
-                'policy_name' => NULL,
-                'controller' => NULL,
+                'controller' => '\\App\\Http\\Controllers\\Voyager\\UserTokensController',
                 'description' => NULL,
                 'generate_permissions' => 1,
                 'server_side' => 0,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
-                'created_at' => '2019-01-22 19:43:49',
-                'updated_at' => '2019-03-14 04:21:33',
->>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+                'created_at' => '2019-02-01 01:52:25',
+                'updated_at' => '2019-03-14 04:22:21',
             ]);
 
             
             
 
-            Voyager::model('Permission')->generateFor('datapoints');
+            Voyager::model('Permission')->generateFor('usertokens');
 
             $menu = Menu::where('name', config('voyager.bread.default_menu'))->firstOrFail();
 
             $menuItem = MenuItem::firstOrNew([
                 'menu_id' => $menu->id,
-                'title' => 'Datapoints',
+                'title' => 'Usertokens',
                 'url' => '',
-                'route' => 'voyager.datapoints.index',
+                'route' => 'voyager.usertokens.index',
             ]);
 
             $order = Voyager::model('MenuItem')->highestOrderMenuItem();

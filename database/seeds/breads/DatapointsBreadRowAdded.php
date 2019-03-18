@@ -38,31 +38,53 @@ class DatapointsBreadRowAdded extends Seeder
                 1 => 
                 [
                     'data_type_id' => $dataType->id,
+<<<<<<< HEAD
                     'field' => 'sensor_id',
                     'type' => 'text',
                     'display_name' => 'Sensor Id',
                     'required' => 1,
+=======
+                    'field' => 'datapoint_belongsto_sensor_relationship',
+                    'type' => 'relationship',
+                    'display_name' => 'Sensor',
+                    'required' => 0,
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
+<<<<<<< HEAD
                     'details' => '{}',
+=======
+                    'details' => '{"model":"App\\\\Sensor","table":"sensors","type":"belongsTo","column":"sensor_id","key":"id","label":"external_id","pivot_table":"categories","pivot":"0","taggable":"0"}',
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'order' => 2,
                 ],
                 2 => 
                 [
                     'data_type_id' => $dataType->id,
+<<<<<<< HEAD
                     'field' => 'location_id',
                     'type' => 'text',
                     'display_name' => 'Location Id',
                     'required' => 1,
+=======
+                    'field' => 'datapoint_belongsto_location_relationship',
+                    'type' => 'relationship',
+                    'display_name' => 'Location',
+                    'required' => 0,
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
+<<<<<<< HEAD
                     'details' => '{}',
+=======
+                    'details' => '{"model":"App\\\\Location","table":"locations","type":"belongsTo","column":"location_id","key":"id","label":"name","pivot_table":"categories","pivot":"0","taggable":"0"}',
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'order' => 3,
                 ],
                 3 => 
@@ -83,6 +105,24 @@ class DatapointsBreadRowAdded extends Seeder
                 4 => 
                 [
                     'data_type_id' => $dataType->id,
+<<<<<<< HEAD
+=======
+                    'field' => 'created_at',
+                    'type' => 'timestamp',
+                    'display_name' => 'Timestamp',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 0,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'order' => 5,
+                ],
+                5 => 
+                [
+                    'data_type_id' => $dataType->id,
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'field' => 'sensor_height',
                     'type' => 'text',
                     'display_name' => 'Sensor Height',
@@ -95,7 +135,26 @@ class DatapointsBreadRowAdded extends Seeder
                     'details' => '{}',
                     'order' => 5,
                 ],
+<<<<<<< HEAD
                 5 => 
+=======
+                6 => 
+                [
+                    'data_type_id' => $dataType->id,
+                    'field' => 'sensor_id',
+                    'type' => 'text',
+                    'display_name' => 'Sensor Id',
+                    'required' => 1,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                'details' => '{"validation":{"rule":["required"],"messages":{"required":"The sensor field is required."}}}',
+                    'order' => 6,
+                ],
+                7 => 
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'distance_report',
@@ -110,18 +169,28 @@ class DatapointsBreadRowAdded extends Seeder
                     'details' => '{}',
                     'order' => 6,
                 ],
+<<<<<<< HEAD
                 6 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'water_height',
                     'type' => 'text',
                     'display_name' => 'Water Height',
+=======
+                8 => 
+                [
+                    'data_type_id' => $dataType->id,
+                    'field' => 'location_id',
+                    'type' => 'text',
+                    'display_name' => 'Location Id',
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
+<<<<<<< HEAD
                     'details' => '{}',
                     'order' => 7,
                 ],
@@ -141,6 +210,27 @@ class DatapointsBreadRowAdded extends Seeder
                     'order' => 8,
                 ],
                 8 => 
+=======
+                'details' => '{"validation":{"rule":["required"],"messages":{"required":"The location field is required."}}}',
+                    'order' => 7,
+                ],
+                9 => 
+                [
+                    'data_type_id' => $dataType->id,
+                    'field' => 'water_height',
+                    'type' => 'text',
+                    'display_name' => 'Water Height',
+                    'required' => 1,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'order' => 7,
+                ],
+                10 => 
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'updated_at',
@@ -153,9 +243,15 @@ class DatapointsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
+<<<<<<< HEAD
                     'order' => 9,
                 ],
                 9 => 
+=======
+                    'order' => 8,
+                ],
+                11 => 
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'deleted_at',

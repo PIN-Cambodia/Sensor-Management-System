@@ -32,6 +32,7 @@ class LocationsBreadTypeAdded extends Seeder
 
             \DB::table('data_types')->insert([
                 'name' => 'locations',
+<<<<<<< HEAD
                 'display_name_singular' => 'Location',
                 'display_name_plural' => 'Locations',
                 'slug' => 'locations',
@@ -45,6 +46,21 @@ class LocationsBreadTypeAdded extends Seeder
                 'server_side' => 0,
                 'updated_at' => '2019-03-14 08:44:48',
                 'created_at' => '2019-03-14 08:44:48',
+=======
+                'slug' => 'locations',
+                'display_name_singular' => 'Location',
+                'display_name_plural' => 'Locations',
+                'icon' => NULL,
+                'model_name' => 'App\\Location',
+                'policy_name' => NULL,
+                'controller' => NULL,
+                'description' => NULL,
+                'generate_permissions' => 1,
+                'server_side' => 0,
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
+                'created_at' => '2019-01-22 19:15:55',
+                'updated_at' => '2019-03-14 04:22:02',
+>>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
             ]);
 
             
