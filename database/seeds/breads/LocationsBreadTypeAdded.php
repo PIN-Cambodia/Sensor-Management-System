@@ -44,7 +44,7 @@ class LocationsBreadTypeAdded extends Seeder
                 'server_side' => 0,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
                 'created_at' => '2019-01-22 19:15:55',
-                'updated_at' => '2019-03-14 04:22:02',
+                'updated_at' => '2019-03-18 05:44:06',
             ]);
 
             
