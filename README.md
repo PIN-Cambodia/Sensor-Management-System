@@ -20,11 +20,12 @@ This project is docker enabled. The first time you run it, you will have to do t
     docker-compose exec app /bin/bash -c 'php artisan key:generate'
     docker-compose exec app /bin/bash -c 'php artisan migrate'
     
-We use Voyger for the backend, in order to initialise an admin user, you can run the following commands:
+We use Voyger for the backend, in order to initialise the db content and an admin user, you can run the following commands:
 
     docker-compose exec app /bin/bash -c 'php artisan passport:install'
     docker-compose exec app /bin/bash -c 'php artisan voyager:install'
     docker-compose exec app /bin/bash -c 'php artisan voyager:admin --create'
+    docker-compose exec app /bin/bash -c 'php artisan db:seed'
     
 After this, you will be able to access [http://localhost:8080/admin](http://localhost:8080/admin)
 
