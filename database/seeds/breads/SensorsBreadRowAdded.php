@@ -77,7 +77,7 @@ class SensorsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                    'details' => '{"placeholder":"","default":"abd","cursor":"testing"}',
                     'order' => 4,
                 ],
                 4 => 

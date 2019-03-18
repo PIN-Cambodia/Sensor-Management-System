@@ -30,11 +30,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
 
-              foreach($permissionArray as $key=>$roles){
-                    Gate::define($key, function(User $user) use ($roles){
-                        return count(array_intersect($user->role()->pluck('id')->toArray(),$roles));
-                    });
-              }
+              // foreach($permissionArray as $key=>$roles){
+              //       Gate::define($key, function(User $user) use ($roles){
+              //           return count(array_intersect($user->role()->pluck('id')->toArray(),$roles));
+              //       });
+              // }
 
         // This check allows us to run composer installation etc before the db has been created
         if (Schema::hasTable(with(new Role())->getTable()) ) {
