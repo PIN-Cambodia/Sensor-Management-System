@@ -257,7 +257,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{"id":"comment_kh"}',
+                    'details' => '{}',
                     'order' => 15,
                 ],
                 16 => 
