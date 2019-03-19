@@ -35,26 +35,16 @@ class SensorsBreadTypeAdded extends Seeder
                 'slug' => 'sensors',
                 'display_name_singular' => 'Sensor',
                 'display_name_plural' => 'Sensors',
-<<<<<<< HEAD
                 'icon' => NULL,
-=======
-                'icon' => 'voyager-terminal',
->>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                 'model_name' => 'App\\Sensor',
                 'policy_name' => NULL,
                 'controller' => NULL,
                 'description' => NULL,
                 'generate_permissions' => 1,
                 'server_side' => 0,
-<<<<<<< HEAD
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}',
                 'created_at' => '2019-03-14 08:52:02',
-                'updated_at' => '2019-03-18 04:59:27',
-=======
-                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
-                'created_at' => '2019-01-22 10:08:56',
-                'updated_at' => '2019-03-14 07:05:46',
->>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+                'updated_at' => '2019-03-18 08:42:38',
             ]);
 
             
@@ -76,11 +66,7 @@ class SensorsBreadTypeAdded extends Seeder
             if (!$menuItem->exists) {
                 $menuItem->fill([
                     'target' => '_self',
-<<<<<<< HEAD
                     'icon_class' => '',
-=======
-                    'icon_class' => 'voyager-terminal',
->>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'color' => null,
                     'parent_id' => null,
                     'order' => $order,
