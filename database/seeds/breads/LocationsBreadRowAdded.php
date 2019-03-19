@@ -48,10 +48,14 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'details' => '{}',
 =======
                     'details' => '{"validation":{"rule":"required|max:50","messages":{"required":"The name field is required.","max":"This  field maximum :max."}}}',
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+=======
+                    'details' => '{"validation":{"rule":"required|max:50","messages":{"required":"The name field is required.","max":"This  field maximum :max."}},"title":"Hello watch level"}',
+>>>>>>> 68ef50381a1a8f90603233d2f80cc52d41a0bce6
                     'order' => 2,
                 ],
                 2 => 
@@ -71,10 +75,14 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'details' => '{}',
 =======
                 'details' => '{"default":"Water","options":{"Water":"Water","Air":"Air","Ground water":"Ground water"},"validation":{"rule":["required"],"messages":{"required":"The User Id field is required."}}}',
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+=======
+                'details' => '{"default":"River","options":{"River":"River","Air":"Air","Ground water":"Ground water"},"validation":{"rule":["required"],"messages":{"required":"The User Id field is required."}}}',
+>>>>>>> 68ef50381a1a8f90603233d2f80cc52d41a0bce6
                     'order' => 3,
                 ],
                 3 => 
@@ -89,7 +97,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                'details' => '{"validation":{"rule":["numeric"]}}',
                     'order' => 4,
                 ],
                 4 => 
@@ -104,7 +112,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                'details' => '{"validation":{"rule":["numeric"]}}',
                     'order' => 5,
                 ],
                 5 => 
@@ -117,17 +125,21 @@ class LocationsBreadRowAdded extends Seeder
                     'type' => 'select_dropdown',
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'display_name' => 'Sensor Id',
-                    'required' => 1,
+                    'required' => 0,
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'details' => '{}',
 =======
                 'details' => '{"validation":{"rule":["required","unique:locations"],"messages":{"required":"The sensor field is required.","unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"}}',
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+=======
+                'details' => '{"validation":{"rule":["unique:locations,name"],"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
+>>>>>>> 68ef50381a1a8f90603233d2f80cc52d41a0bce6
                     'order' => 6,
                 ],
                 6 => 
@@ -239,15 +251,15 @@ class LocationsBreadRowAdded extends Seeder
                     'data_type_id' => $dataType->id,
                     'field' => 'sensor_height',
                     'type' => 'text',
-                    'display_name' => 'Sensor Height',
-                    'required' => 1,
+                    'display_name' => 'Sensor installation height',
+                    'required' => 0,
                     'browse' => 0,
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0}',
                     'order' => 10,
                 ],
 <<<<<<< HEAD
@@ -266,14 +278,14 @@ class LocationsBreadRowAdded extends Seeder
                     'field' => 'watch_level',
                     'type' => 'text',
                     'display_name' => 'Watch Level',
-                    'required' => 1,
+                    'required' => 0,
                     'browse' => 0,
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0,"title":"Hello watch level"}',
                     'order' => 11,
                 ],
 <<<<<<< HEAD
@@ -295,14 +307,14 @@ class LocationsBreadRowAdded extends Seeder
                     'field' => 'warning_level',
                     'type' => 'text',
                     'display_name' => 'Warning Level',
-                    'required' => 1,
+                    'required' => 0,
                     'browse' => 0,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
                     'delete' => 1,
-                    'details' => '{}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0}',
                     'order' => 12,
                 ],
 <<<<<<< HEAD
@@ -336,13 +348,13 @@ class LocationsBreadRowAdded extends Seeder
                     'field' => 'severe_level',
                     'type' => 'text',
                     'display_name' => 'Severe Warning Level',
-                    'required' => 1,
+                    'required' => 0,
                     'browse' => 0,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0}',
                     'order' => 13,
                 ],
                 14 => 
@@ -359,11 +371,45 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
 <<<<<<< HEAD
+<<<<<<< HEAD
                     'details' => '{}',
 =======
                 'details' => '{"default":"Test","options":{"Test":"Test","Plan":"Plan","Operational":"Operational"},"validation":{"rule":["required"],"messages":{"required":"The status field is required."}}}',
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+=======
+                'details' => '{"default":"Test","options":{"Test":"Test","Planed":"Planed","Operational":"Operational"},"validation":{"rule":["required"],"messages":{"required":"The status field is required."}}}',
+>>>>>>> 68ef50381a1a8f90603233d2f80cc52d41a0bce6
                     'order' => 14,
+                ],
+                15 => 
+                [
+                    'data_type_id' => $dataType->id,
+                    'field' => 'comment_kh',
+                    'type' => 'text_area',
+                    'display_name' => 'Comment Kh',
+                    'required' => 0,
+                    'browse' => 0,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'order' => 15,
+                ],
+                16 => 
+                [
+                    'data_type_id' => $dataType->id,
+                    'field' => 'comment_en',
+                    'type' => 'text_area',
+                    'display_name' => 'Comment En',
+                    'required' => 0,
+                    'browse' => 0,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'order' => 16,
                 ],
             ]);
         } catch(Exception $e) {

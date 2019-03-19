@@ -42,9 +42,15 @@ class SensorsBreadTypeAdded extends Seeder
                 'description' => NULL,
                 'generate_permissions' => 1,
                 'server_side' => 0,
+<<<<<<< HEAD
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}',
                 'created_at' => '2019-03-14 08:52:02',
                 'updated_at' => '2019-03-18 08:42:38',
+=======
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
+                'created_at' => '2019-01-22 10:08:56',
+                'updated_at' => '2019-03-18 08:25:23',
+>>>>>>> 68ef50381a1a8f90603233d2f80cc52d41a0bce6
             ]);
 
             

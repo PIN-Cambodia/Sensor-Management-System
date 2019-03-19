@@ -59,8 +59,12 @@ class DatapointsBreadTypeAdded extends Seeder
                 'server_side' => 0,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
                 'created_at' => '2019-01-22 19:43:49',
+<<<<<<< HEAD
                 'updated_at' => '2019-03-14 04:21:33',
 >>>>>>> 2d9722f5439ed9ee9d1dadf9f3a9555389811861
+=======
+                'updated_at' => '2019-03-15 10:24:07',
+>>>>>>> 68ef50381a1a8f90603233d2f80cc52d41a0bce6
             ]);
 
             

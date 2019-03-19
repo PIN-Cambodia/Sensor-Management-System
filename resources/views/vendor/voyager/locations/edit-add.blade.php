@@ -128,18 +128,32 @@
     </div>
 
 
-
     <!-- End Delete File Modal -->
 @stop
 
 @section('javascript')
-    <script>
 
-      //  $('input[type=text],textarea').prop('readonly', true);       
+<script src="{{asset('js/km.js')}}">
+</script>
+
+    <script>
+      // $('input[type=text],textarea').prop('readonly', true);       
      // $('input[name="sensor_height"]').prop('readonly', true);
      visibleWater("inline");
-     $(document).ready(function() {
-            
+     $(document).ready(function() {        
+       
+
+           $('textarea[name="comment_kh"]').attr("id","comment_kh");        
+/*
+                $('*[class*="form-control"]').each(function () {                 
+
+                        new VKey.keyboard($(this).attr("id"), "km");
+                });              
+*/
+
+  
+            new VKey.keyboard("comment_kh", "km");
+                
             getSensor($('select[name="type"]').val(),$('select[name="sensor_id"]').val());
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
@@ -148,7 +162,7 @@
                     case 'Air':                        
                          hideWater();
                     break;
-                    case 'Water':
+                    case 'River':
                         // visibleWater("inline");
                          showWater();
                     break;
@@ -166,6 +180,17 @@
                 alert(this.name);
             }) */
 
+             $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
+
+              $('input[name="watch_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Watch' status");
+              $('input[name="warning_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Warning' status");
+              $('input[name="severe_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Severe Warning' status");
+
+            $(document).tooltip({ selector: "[title]",
+                              placement: "bottom",
+                              trigger: "focus",
+                              animation: false}); 
+
      });
 
 
@@ -179,7 +204,8 @@
      }
 
      function showWater()
-     {
+     {       
+
         $('input[name="sensor_height"]').parent().show(100);
         $('input[name="watch_level"]').parent().show(100);
         $('input[name="warning_level"]').parent().show(100);
@@ -207,7 +233,10 @@
 
                                     success:function(data) {
 
-                                        $('select[name="state"]').empty();
+                                        $('select[name="sensor_id"]').empty();
+
+                                        $('select[name="sensor_id"]').append('<option selected value="">' + '--None--' + '</option>');
+
 
                                         $.each(data, function(key, value){  
 

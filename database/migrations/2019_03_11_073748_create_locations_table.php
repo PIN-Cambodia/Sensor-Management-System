@@ -23,16 +23,15 @@ class CreateLocationsTable extends Migration
                 $table->float('latitude');
                 $table->float('longitude');
 
-                $table->integer('sensor_id');
-                $table->float('sensor_height');
-                $table->float('watch_level');
-                $table->float('warning_level');
-                $table->float('severe_level');
+                $table->integer('sensor_id')->nullable();
+                $table->float('sensor_height')->nullable();
+                $table->float('watch_level')->nullable();
+                $table->float('warning_level')->nullable();
+                $table->float('severe_level')->nullable();
                 $table->string('status');
                 $table->timestamp('created_at')->nullable();
                 $table->timestamp('updated_at')->nullable();
-                $table->timestamp('deleted_at')->nullable();   
-
+                $table->timestamp('deleted_at')->nullable();
             });
         }
 
