@@ -16,13 +16,5 @@ class VoyagerDeploymentOrchestratorSeeder extends Seeder
      */
     public function run()
     {
-        $this->seed(SensorsBreadTypeAdded::class);
-        $this->seed(SensorsBreadRowAdded::class);
-        $this->seed(DatapointsBreadTypeAdded::class);
-        $this->seed(DatapointsBreadRowAdded::class);
-        $this->seed(LocationsBreadTypeAdded::class);
-        $this->seed(LocationsBreadRowAdded::class);
-        $this->seed(UsertokensBreadTypeAdded::class);
-        $this->seed(UsertokensBreadRowAdded::class);
     }
 }

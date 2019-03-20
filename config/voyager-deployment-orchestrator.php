@@ -2,6 +2,7 @@
 
 return [
     'tables' => [
+
         'users',
         'sensors',
         'usertokens',
@@ -11,3 +12,4 @@ return [
 ];
 
 //users,sensors,usertokens,datapoints,locations
+

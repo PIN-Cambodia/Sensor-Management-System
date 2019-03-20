@@ -20,8 +20,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
     ];
-
-    /**
+      /**
      * Register any authentication / authorization services.
      *
      * @return void
@@ -30,6 +29,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+
+              // foreach($permissionArray as $key=>$roles){
+              //       Gate::define($key, function(User $user) use ($roles){
+              //           return count(array_intersect($user->role()->pluck('id')->toArray(),$roles));
+              //       });
+              // }
 
         // This check allows us to run composer installation etc before the db has been created
         if (Schema::hasTable(with(new Role())->getTable()) ) {
@@ -50,5 +55,8 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
         Passport::tokensExpireIn(now()->addYears(18));
         Passport::refreshTokensExpireIn(now()->addYears(18));
+
     }
+
+  
 }

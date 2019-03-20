@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-class TokenController00 extends Controller
+class TokenController extends Controller
 {
 
 	public function index()
 	{
-		return "hellow";
+		return view('usertoken');
 	}
 
     public function generateToken(Request $request,$id){

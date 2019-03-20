@@ -38,8 +38,9 @@ public function generateToken($username,$password)
     {
         $data = [
                     'grant_type' => 'password',
-                    'client_id' => '2',
-                    'client_secret' => '4Nl8DahpbotBNYzLNrJsx6iM9SAXaZFU726sSHMr',
+
+                    'client_id' => '6',
+                    'client_secret' => '3ZjzkCldAyTeGndUIHCSfUjmWvhxJhfKahcBpvem',
                     'username' => $username,
                     'password' => $password
                  ];

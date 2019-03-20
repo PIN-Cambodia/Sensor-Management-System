@@ -133,8 +133,12 @@
 @section('javascript')
     <script>
 
+<<<<<<< HEAD
+
+=======
         $('input[type=text],textarea').prop('readonly', true);
        
+>>>>>>> 7e717b36d033bec51a2fa0ab28a6b7d748af7063
 
         var params = {};
         var $file;
