@@ -37,7 +37,7 @@ class SensorInfoController extends Controller
                                     'distance_report'=>($datapoint!=null ? $datapoint->distance_report : NULL),                         
                                     'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
                                     'status'=>$value['status'],
-                                    'type'=>'bridge',
+                                    'type'=>$value['Type'],
                                     'trigger_levels'=>array('severe_warning'=>$value['severe_level'],'warning'=>$value['warning_level'],'watch_level'=>$value['watch_level']),
                                      )
           );
