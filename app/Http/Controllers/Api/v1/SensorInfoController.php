@@ -18,11 +18,41 @@ class SensorInfoController extends Controller
   public function getLocation(Request $request)
     {
         if($request->type==null)
-             $location=Location::all();
+             $location=Location::with('Sensor')->get();
         else
-            $location=Location::where('type',$request->type)->get();        
+            $location=Location::with('Sensor')->where('type',$request->type)->get();  
 
-        return response()->json($location);
+      foreach($location as $key => $value) {         
+
+          $sensor=$value['sensor'];
+          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
+          $features[] = array(
+              'type' => 'Feature',
+              'geometry' => array('type' => 'Point', 'coordinates' =>array((double)$value['latitude'],(double) $value['longitude']) ),
+              'properties' => array(
+                                    'id'=> $value['id'],
+                                    'name' => $value['name'],
+                                    'external_id'=>$sensor['external_id'], 
+                                    'sensor_height'=> ($datapoint!=null ? $datapoint->sensor_height : NULL), 
+                                    'distance_report'=>($datapoint!=null ? $datapoint->distance_report : NULL),                         
+                                    'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
+                                    'status'=>$value['status'],
+                                    'type'=>'bridge',
+                                    'trigger_levels'=>array('severe_warning'=>$value['severe_level'],'warning'=>$value['warning_level'],'watch_level'=>$value['watch_level']),
+                                     )
+          );
+      }
+
+       $new_data = array(
+          'type' => 'FeatureCollection',
+          'features' => $features,
+      );
+
+    $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
+      return  $final_data;
+
+     
+
     }
 
 
