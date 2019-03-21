@@ -10,4 +10,8 @@ class Sensor extends Model
     public function Datapoint(){
     	return $this->hasMany('App\Datapoint');
     }
+
+    public function Location(){
+    	return $this->hasMany('App\Location');
+    }
 }

@@ -18,11 +18,47 @@ class SensorInfoController extends Controller
   public function getLocation(Request $request)
     {
         if($request->type==null)
+<<<<<<< HEAD
           $location=Location::get();
                     
+=======
+             $location=Location::with('Sensor')->get();
+>>>>>>> 0cd59c1d812e2e3ee1209bd34a2c33a7ac40e18d
         else
-            $location=Location::where('type',$request->type)->get();        
+            $location=Location::with('Sensor')->where('type',$request->type)->get();  
 
+      foreach($location as $key => $value) {         
+
+          $sensor=$value['sensor'];
+          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
+          $features[] = array(
+              'type' => 'Feature',
+              'geometry' => array('type' => 'Point', 'coordinates' =>array((double)$value['latitude'],(double) $value['longitude']) ),
+              'properties' => array(
+                                    'id'=> $value['id'],
+                                    'name' => $value['name'],
+                                    'external_id'=>$sensor['external_id'], 
+                                    'sensor_height'=> ($datapoint!=null ? $datapoint->sensor_height : NULL), 
+                                    'distance_report'=>($datapoint!=null ? $datapoint->distance_report : NULL),                         
+                                    'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
+                                    'status'=>$value['status'],
+                                    'type'=>$value['Type'],
+                                    'trigger_levels'=>array('severe_warning'=>$value['severe_level'],'warning'=>$value['warning_level'],'watch_level'=>$value['watch_level']),
+                                     )
+          );
+      }
+
+       $new_data = array(
+          'type' => 'FeatureCollection',
+          'features' => $features,
+      );
+
+    $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
+      return  $final_data;
+
+     
+
+<<<<<<< HEAD
         foreach($location as $key => $value) {
 
         $original_data = json_decode($location, true);
@@ -39,6 +75,8 @@ class SensorInfoController extends Controller
         $allfeatures = array('type' => 'FeatureCollection', 'features' => $features);
         return json_encode($allfeatures, JSON_PRETTY_PRINT);
 
+=======
+>>>>>>> 0cd59c1d812e2e3ee1209bd34a2c33a7ac40e18d
     }
   }
 

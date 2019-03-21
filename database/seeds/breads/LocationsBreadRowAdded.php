@@ -160,7 +160,7 @@ class LocationsBreadRowAdded extends Seeder
                     'data_type_id' => $dataType->id,
                     'field' => 'location_belongsto_sensor_relationship',
                     'type' => 'relationship',
-                    'display_name' => 'sensors',
+                    'display_name' => 'sensor',
                     'required' => 0,
                     'browse' => 1,
                     'read' => 1,
