@@ -18,12 +18,9 @@ class SensorInfoController extends Controller
   public function getLocation(Request $request)
     {
         if($request->type==null)
-<<<<<<< HEAD
-          $location=Location::get();
-                    
-=======
+
              $location=Location::with('Sensor')->get();
->>>>>>> 0cd59c1d812e2e3ee1209bd34a2c33a7ac40e18d
+
         else
             $location=Location::with('Sensor')->where('type',$request->type)->get();  
 
@@ -55,28 +52,6 @@ class SensorInfoController extends Controller
 
     $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
       return  $final_data;
-
-     
-
-<<<<<<< HEAD
-        foreach($location as $key => $value) {
-
-        $original_data = json_decode($location, true);
-        $features = array();
-
-        foreach($original_data as $key => $value) { 
-            $features[] = array(
-                    'type' => 'Feature',
-                    'geometry' => array('type' => 'Point', 'coordinates' => array((float)$value['latitude'],(float)$value['longitude'])),
-                    'properties' => array('name' => $value['name'],'id' => $value['id'],'type' => $value['type'],'trigger_levels'=>array('severe_level'=> $value['severe_level'],'warning_level'=>$value['warning_level'],'watch_level'=>$value['watch_level']))
-                  );
-            };   
-
-        $allfeatures = array('type' => 'FeatureCollection', 'features' => $features);
-        return json_encode($allfeatures, JSON_PRETTY_PRINT);
-
-=======
->>>>>>> 0cd59c1d812e2e3ee1209bd34a2c33a7ac40e18d
     }
   }
 
