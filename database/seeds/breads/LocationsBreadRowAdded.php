@@ -77,7 +77,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                'details' => '{"validation":{"rule":["numeric"]}}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0}',
                     'order' => 4,
                 ],
                 4 => 
