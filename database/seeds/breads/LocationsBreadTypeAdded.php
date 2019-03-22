@@ -44,11 +44,32 @@ class LocationsBreadTypeAdded extends Seeder
                 'server_side' => 0,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
                 'created_at' => '2019-01-22 19:15:55',
-                'updated_at' => '2019-03-19 02:30:57',
+                'updated_at' => '2019-03-22 10:25:43',
             ]);
 
-            
-            
+            $dataType = DataType::where('name', 'locations')->first();
+            \DB::table('translations')->insert([
+                0 => 
+                [
+                    'table_name' => 'data_types',
+                    'column_name' => 'display_name_plural',
+                    'foreign_key' => $dataType->id,
+                    'locale' => 'kh',
+                    'value' => 'Locations',
+                    'created_at' => '2019-03-22 02:59:48',
+                    'updated_at' => '2019-03-22 02:59:48',
+                ],
+                1 => 
+                [
+                    'table_name' => 'data_types',
+                    'column_name' => 'display_name_singular',
+                    'foreign_key' => $dataType->id,
+                    'locale' => 'kh',
+                    'value' => 'Location',
+                    'created_at' => '2019-03-22 02:59:48',
+                    'updated_at' => '2019-03-22 02:59:48',
+                ],
+            ]);
 
             Voyager::model('Permission')->generateFor('locations');
 

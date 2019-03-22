@@ -14,8 +14,10 @@ class UpdateLocationDecimal extends Migration
     public function up()
     {
         Schema::table('locations', function (Blueprint $table) {
-            $table->decimal('latitude', 8, 6)->change();
-            $table->decimal('longitude', 8, 6)->change();
+            $table->decimal('latitude', 8, 5)->change();
+            $table->decimal('longitude', 8, 5)->change();
+            $table->renameColumn('comment_en', 'comment');
+            $table->dropColumn('comment_kh');
         });
     }
 
