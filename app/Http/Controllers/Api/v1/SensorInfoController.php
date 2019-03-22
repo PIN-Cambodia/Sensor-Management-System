@@ -18,26 +18,10 @@ class SensorInfoController extends Controller
   public function getLocation(Request $request)
     {
      
-
-     $posts = Location::withTranslations(['kh'])->where('id',17)->get();    
-     $posts = $posts->translate('kh', 'fallbackLocale');
-    
-
-       echo $posts[0]->name;
-       echo "<br>";
-       echo $posts[0]->comment;
-       echo "<p>";
-
-      //return $posts;
-
-
-
-   
-
-        if($request->type==null)
+      if($request->type==null)
              $location=Location::with('Sensor')->get();
-        else
-            $location=Location::with('Sensor')->where('type',$request->type)->get();  
+      else
+           $location=Location::with('Sensor')->where('type',$request->type)->get();  
 
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
