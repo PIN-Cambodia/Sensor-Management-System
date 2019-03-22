@@ -107,7 +107,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                'details' => '{"validation":{"rule":["unique:locations,name"],"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
+                'details' => '{"validation":{"rule":[],"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
                     'order' => 6,
                 ],
                 6 => 
@@ -248,32 +248,17 @@ class LocationsBreadRowAdded extends Seeder
                 15 => 
                 [
                     'data_type_id' => $dataType->id,
-                    'field' => 'comment_kh',
-                    'type' => 'text_area',
-                    'display_name' => 'Comment Kh',
+                    'field' => 'comment',
+                    'type' => 'text',
+                    'display_name' => 'Comment',
                     'required' => 0,
-                    'browse' => 0,
+                    'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
                     'order' => 15,
-                ],
-                16 => 
-                [
-                    'data_type_id' => $dataType->id,
-                    'field' => 'comment_en',
-                    'type' => 'text_area',
-                    'display_name' => 'Comment En',
-                    'required' => 0,
-                    'browse' => 0,
-                    'read' => 1,
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
-                    'details' => '{}',
-                    'order' => 16,
                 ],
             ]);
         } catch(Exception $e) {

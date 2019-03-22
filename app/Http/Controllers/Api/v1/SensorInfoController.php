@@ -17,14 +17,42 @@ class SensorInfoController extends Controller
 
   public function getLocation(Request $request)
     {
+     
+
+     $posts = Location::withTranslations(['kh'])->where('id',17)->get();    
+     $posts = $posts->translate('kh', 'fallbackLocale');
+    
+
+       echo $posts[0]->name;
+       echo "<br>";
+       echo $posts[0]->comment;
+       echo "<p>";
+
+      //return $posts;
+
+
+
+   
+
         if($request->type==null)
              $location=Location::with('Sensor')->get();
         else
             $location=Location::with('Sensor')->where('type',$request->type)->get();  
 
+      /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
+         
+          /* get translation in khmer for feild name and comment by location*/
+          $translatekh = Location::withTranslations(['kh'])->where('id',(int) $value['id'])->get();    
+          $translatekh = $translatekh->translate('kh', 'fallbackLocale');
+          $namekh= $translatekh[0]->name;
+          $commenkh=$translatekh[0]->comment;
+          /* end translation */
 
+          /*get sensor information in location*/
           $sensor=$value['sensor'];
+
+          /* get the last information of datapoint in the location */
           $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
           $features[] = array(
               'type' => 'Feature',
@@ -32,12 +60,15 @@ class SensorInfoController extends Controller
               'properties' => array(
                                     'id'=> $value['id'],
                                     'name' => $value['name'],
+                                    'namekh'=>$namekh,
                                     'external_id'=>$sensor['external_id'], 
                                     'sensor_height'=> ($datapoint!=null ? $datapoint->sensor_height : NULL), 
                                     'distance_report'=>($datapoint!=null ? $datapoint->distance_report : NULL),                         
                                     'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
                                     'status'=>$value['status'],
                                     'type'=>$value['Type'],
+                                    'comment'=>$value['comment'],
+                                     'commentkh'=>$commenkh,
                                     'trigger_levels'=>array('severe_warning'=>$value['severe_level'],'warning'=>$value['warning_level'],'watch_level'=>$value['watch_level']),
                                      )
           );
@@ -48,10 +79,13 @@ class SensorInfoController extends Controller
           'features' => $features,
       );
 
-    $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
-      return  $final_data;
+   // $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
+  $final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
+       
+    
+    return  $final_data;
 
-     
+  
 
     }
 
