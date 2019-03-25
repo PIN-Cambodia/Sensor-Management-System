@@ -42,9 +42,10 @@ class LocationsBreadTypeAdded extends Seeder
                 'description' => NULL,
                 'generate_permissions' => 1,
                 'server_side' => 0,
-                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
+                'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}',
                 'created_at' => '2019-01-22 19:15:55',
-                'updated_at' => '2019-03-25 02:28:20',
+                'updated_at' => '2019-03-25 02:56:59',
+
             ]);
 
             $dataType = DataType::where('name', 'locations')->first();
@@ -56,8 +57,8 @@ class LocationsBreadTypeAdded extends Seeder
                     'foreign_key' => $dataType->id,
                     'locale' => 'kh',
                     'value' => 'Locations',
-                    'created_at' => '2019-03-22 02:59:48',
-                    'updated_at' => '2019-03-22 02:59:48',
+                    'created_at' => '2019-03-25 02:02:47',
+                    'updated_at' => '2019-03-25 02:02:47',
                 ],
                 1 => 
                 [
@@ -66,8 +67,8 @@ class LocationsBreadTypeAdded extends Seeder
                     'foreign_key' => $dataType->id,
                     'locale' => 'kh',
                     'value' => 'Location',
-                    'created_at' => '2019-03-22 02:59:48',
-                    'updated_at' => '2019-03-22 02:59:48',
+                    'created_at' => '2019-03-25 02:02:47',
+                    'updated_at' => '2019-03-25 02:02:47',
                 ],
             ]);
 

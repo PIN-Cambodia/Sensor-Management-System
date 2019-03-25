@@ -77,7 +77,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                'details' => '{"validation":{"rule":["numeric"]}}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0}',
                     'order' => 4,
                 ],
                 4 => 
@@ -107,7 +107,7 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                'details' => '{"validation":{"rule":[],"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
+                'details' => '{"validation":{"rule":["unique:locations,name"],"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
                     'order' => 6,
                 ],
                 6 => 
