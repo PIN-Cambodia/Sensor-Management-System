@@ -27,7 +27,10 @@ class SensorInfoController extends Controller
       foreach($location as $key => $value) {         
 
           $sensor=$value['sensor'];
-          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
+          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();
+          $location_lang = $location_lang->translate('kh', 'fallbackLocale');
+          $name= $location_lang->name;
+          $comment= $location_lang->comment;         
           $features[] = array(
               'type' => 'Feature',
               'geometry' => array('type' => 'Point', 'coordinates' =>array((double)$value['latitude'],(double) $value['longitude']) ),

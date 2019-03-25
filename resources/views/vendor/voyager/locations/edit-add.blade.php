@@ -139,11 +139,17 @@
     <script>
       // $('input[type=text],textarea').prop('readonly', true);       
      // $('input[name="sensor_height"]').prop('readonly', true);
-     visibleWater("inline");
-     $(document).ready(function() {        
-       
+    
+     $(document).ready(function() {  
 
-           $('textarea[name="comment_kh"]').attr("id","comment_kh");        
+            $("#en").focus(function(){
+                
+            }); 
+
+
+            // $("#kh").focus(function(){
+          
+            //    $('textarea[name="comment_en"]').attr("id","comment_en");        
 /*
                 $('*[class*="form-control"]').each(function () {                 
 
@@ -152,7 +158,23 @@
 */
 
   
-            new VKey.keyboard("comment_kh", "km");
+            // new VKey.keyboard("comment_en", "km");
+            // });     
+       $('#comment_en').each(function() {
+    var default_value = this.value;
+    $(this).focus(function() {
+        if(this.value == default_value) {
+            this.value = '';
+        }
+    });
+    $(this).blur(function() {
+        if(this.value == '') {
+            this.value = default_value;
+        }
+    });
+});
+            visibleWater("inline");
+         
                 
             getSensor($('select[name="type"]').val(),$('select[name="sensor_id"]').val());
             $('select[name="type"]').on('select2:select', function (e) {
