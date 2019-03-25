@@ -128,6 +128,8 @@
     </div>
 
 
+
+
     <!-- End Delete File Modal -->
 @stop
 
@@ -137,6 +139,7 @@
 </script>
 
     <script>
+<<<<<<< HEAD
       // $('input[type=text],textarea').prop('readonly', true);       
      // $('input[name="sensor_height"]').prop('readonly', true);
     
@@ -152,11 +155,49 @@
             //    $('textarea[name="comment_en"]').attr("id","comment_en");        
 /*
                 $('*[class*="form-control"]').each(function () {                 
+=======
 
-                        new VKey.keyboard($(this).attr("id"), "km");
-                });              
-*/
+    
+     $(document).ready(function() { 
 
+       
+            /* block check language */
+            $('input[name="name"]').attr("id","name");
+            $('input[name="comment"]').attr("id","comment");
+            $layout_en=VKey.layout.en; //key layout key for english, console.log($layout_en);
+            $layout_km=VKey.layout.km;//key layout key for khmer, console.log($layout_km);
+            
+            $layout_fld_name=new VKey.keyboard("name", "en");
+            $layout_fld_comment=new VKey.keyboard("comment", "en");
+          
+            
+            /* when click on select language en or kh */
+            $("#kh").focus(function() {
+                   
+                     $layout_fld_name.currentLayout=$layout_km;
+                     $layout_fld_comment.currentLayout=$layout_km;
+            });
+
+            $("#en").focus(function() {
+                   
+                     $layout_fld_name.currentLayout=$layout_en;
+                     $layout_fld_comment.currentLayout=$layout_en;
+             });
+
+            
+            /*
+               $('textarea[name="comment"]').attr("id","comment_kh");        
+      
+                    $('*[class*="form-control"]').each(function () {                 
+>>>>>>> master
+
+                            new VKey.keyboard($(this).attr("id"), "km");
+                    });         
+     
+               new VKey.keyboard("comment_kh", "km");
+            */
+
+<<<<<<< HEAD
   
             // new VKey.keyboard("comment_en", "km");
             // });     
@@ -176,6 +217,10 @@
             visibleWater("inline");
          
                 
+=======
+
+            visibleWater("inline");
+>>>>>>> master
             getSensor($('select[name="type"]').val(),$('select[name="sensor_id"]').val());
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
@@ -198,15 +243,10 @@
 
             });
 
-         /* $('select').select2().on("change", function(e) { 
-                alert(this.name);
-            }) */
-
-             $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
-
-              $('input[name="watch_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Watch' status");
-              $('input[name="warning_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Warning' status");
-              $('input[name="severe_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Severe Warning' status");
+            $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
+            $('input[name="watch_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Watch' status");
+            $('input[name="warning_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Warning' status");
+            $('input[name="severe_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Severe Warning' status");
 
             $(document).tooltip({ selector: "[title]",
                               placement: "bottom",
@@ -216,34 +256,34 @@
      });
 
 
-     function visibleWater(status){
-        $('input[name="sensor_height"]').parent().css("display",status);
-        $('input[name="watch_level"]').parent().css("display",status);
-        $('input[name="warning_level"]').parent().css("display",status);
-        $('input[name="severe_level"]').parent().css("display",status);
-         
-
+     function visibleWater(status)
+     {
+            $('input[name="sensor_height"]').parent().css("display",status);
+            $('input[name="watch_level"]').parent().css("display",status);
+            $('input[name="warning_level"]').parent().css("display",status);
+            $('input[name="severe_level"]').parent().css("display",status);
      }
 
      function showWater()
      {       
 
-        $('input[name="sensor_height"]').parent().show(100);
-        $('input[name="watch_level"]').parent().show(100);
-        $('input[name="warning_level"]').parent().show(100);
-        $('input[name="severe_level"]').parent().show(100);
+            $('input[name="sensor_height"]').parent().show(100);
+            $('input[name="watch_level"]').parent().show(100);
+            $('input[name="warning_level"]').parent().show(100);
+            $('input[name="severe_level"]').parent().show(100);
      }
 
-      function hideWater(){
-        $('input[name="sensor_height"]').parent().hide(100);
-        $('input[name="watch_level"]').parent().hide(100);
-        $('input[name="warning_level"]').parent().hide(100);
-        $('input[name="severe_level"]').parent().hide(100); 
+      function hideWater()
+      {
+            $('input[name="sensor_height"]').parent().hide(100);
+            $('input[name="watch_level"]').parent().hide(100);
+            $('input[name="warning_level"]').parent().hide(100);
+            $('input[name="severe_level"]').parent().hide(100); 
       }
 
      function getSensor(type,sensor){
 
-         $('select[name="sensor_id"]').empty();
+             $('select[name="sensor_id"]').empty();
                     
                                 $.ajax({
                                     url: '/sensor/get/'+type,
@@ -278,11 +318,9 @@
 
      }
 
-
-
-$("input[placeholder],textarea,select").each(function () {
-      // $(this).attr("data-placeholder", this.placeholder);
-         this.placeholder = '';
+    $("input[placeholder],textarea,select").each(function () {
+          // $(this).attr("data-placeholder", this.placeholder);
+             this.placeholder = '';
     });
 
 

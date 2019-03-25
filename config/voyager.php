@@ -229,4 +229,15 @@ return [
         ],
     ],
 
+     /* language */
+     'multilingual' => [
+        'enabled' => true,
+        'default' => 'en',
+        'locales' => [
+            'en',
+            'kh',
+        ],
+    ],
+    
+
 ];
