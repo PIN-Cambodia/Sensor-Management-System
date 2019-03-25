@@ -44,7 +44,7 @@ class LocationsBreadTypeAdded extends Seeder
                 'server_side' => 0,
                 'details' => '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}',
                 'created_at' => '2019-01-22 19:15:55',
-                'updated_at' => '2019-03-22 10:25:43',
+                'updated_at' => '2019-03-25 02:28:20',
             ]);
 
             $dataType = DataType::where('name', 'locations')->first();

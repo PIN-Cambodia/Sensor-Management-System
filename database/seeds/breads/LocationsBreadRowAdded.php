@@ -249,10 +249,10 @@ class LocationsBreadRowAdded extends Seeder
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'comment',
-                    'type' => 'text',
+                    'type' => 'text_area',
                     'display_name' => 'Comment',
                     'required' => 0,
-                    'browse' => 1,
+                    'browse' => 0,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,

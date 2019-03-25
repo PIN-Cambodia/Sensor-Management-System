@@ -146,7 +146,7 @@
        
             /* block check language */
             $('input[name="name"]').attr("id","name");
-            $('input[name="comment"]').attr("id","comment");
+            $('textarea[name="comment"]').attr("id","comment");
             $layout_en=VKey.layout.en; //key layout key for english, console.log($layout_en);
             $layout_km=VKey.layout.km;//key layout key for khmer, console.log($layout_km);
             

@@ -36,10 +36,14 @@ public function __construct(Application $app)
 
 public function generateToken($username,$password)
     {
+        $grant_type = env("GRANT_TYPE");
+        $client_id=env("CLIENT_ID");
+        $client_secret=env("CLIENT_SECRET");
+
         $data = [
-                    'grant_type' => 'password',
-                    'client_id' => '2',
-                    'client_secret' => '4Nl8DahpbotBNYzLNrJsx6iM9SAXaZFU726sSHMr',
+                    'grant_type' => $grant_type,
+                    'client_id' => $client_id,
+                    'client_secret' => $client_secret,
                     'username' => $username,
                     'password' => $password
                  ];
