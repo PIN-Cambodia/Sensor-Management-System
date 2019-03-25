@@ -17,12 +17,11 @@ class SensorInfoController extends Controller
 
   public function getLocation(Request $request)
     {
-    
+     
       if($request->type==null)
              $location=Location::with('Sensor')->get();
       else
            $location=Location::with('Sensor')->where('type',$request->type)->get();  
-
 
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
@@ -36,7 +35,6 @@ class SensorInfoController extends Controller
 
           /*get sensor information in location*/
           $sensor=$value['sensor'];
-
 
           /* get the last information of datapoint in the location */
           $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
@@ -65,16 +63,15 @@ class SensorInfoController extends Controller
           'features' => $features,
       );
 
-
    // $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
   $final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
        
     
     return  $final_data;
 
-    }
-  }
+  
 
+    }
 
 
     /* get information of Sensor datapoint */
