@@ -139,27 +139,8 @@
 </script>
 
     <script>
-<<<<<<< HEAD
-      // $('input[type=text],textarea').prop('readonly', true);       
-     // $('input[name="sensor_height"]').prop('readonly', true);
-    
-     $(document).ready(function() {  
-
-            $("#en").focus(function(){
-                
-            }); 
-
-
-            // $("#kh").focus(function(){
-          
-            //    $('textarea[name="comment_en"]').attr("id","comment_en");        
-/*
-                $('*[class*="form-control"]').each(function () {                 
-=======
-
     
      $(document).ready(function() { 
-
        
             /* block check language */
             $('input[name="name"]').attr("id","name");
@@ -177,50 +158,22 @@
                      $layout_fld_name.currentLayout=$layout_km;
                      $layout_fld_comment.currentLayout=$layout_km;
             });
-
             $("#en").focus(function() {
                    
                      $layout_fld_name.currentLayout=$layout_en;
                      $layout_fld_comment.currentLayout=$layout_en;
              });
-
             
             /*
                $('textarea[name="comment"]').attr("id","comment_kh");        
       
                     $('*[class*="form-control"]').each(function () {                 
->>>>>>> master
-
                             new VKey.keyboard($(this).attr("id"), "km");
                     });         
      
                new VKey.keyboard("comment_kh", "km");
             */
-
-<<<<<<< HEAD
-  
-            // new VKey.keyboard("comment_en", "km");
-            // });     
-       $('#comment_en').each(function() {
-    var default_value = this.value;
-    $(this).focus(function() {
-        if(this.value == default_value) {
-            this.value = '';
-        }
-    });
-    $(this).blur(function() {
-        if(this.value == '') {
-            this.value = default_value;
-        }
-    });
-});
             visibleWater("inline");
-         
-                
-=======
-
-            visibleWater("inline");
->>>>>>> master
             getSensor($('select[name="type"]').val(),$('select[name="sensor_id"]').val());
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
@@ -237,25 +190,18 @@
                          visibleWater("none");
                          hideWater();
                     break;
-
                 }
               //sensor_id Do something
-
             });
-
             $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
             $('input[name="watch_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Watch' status");
             $('input[name="warning_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Warning' status");
             $('input[name="severe_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Severe Warning' status");
-
             $(document).tooltip({ selector: "[title]",
                               placement: "bottom",
                               trigger: "focus",
                               animation: false}); 
-
      });
-
-
      function visibleWater(status)
      {
             $('input[name="sensor_height"]').parent().css("display",status);
@@ -263,16 +209,13 @@
             $('input[name="warning_level"]').parent().css("display",status);
             $('input[name="severe_level"]').parent().css("display",status);
      }
-
      function showWater()
      {       
-
             $('input[name="sensor_height"]').parent().show(100);
             $('input[name="watch_level"]').parent().show(100);
             $('input[name="warning_level"]').parent().show(100);
             $('input[name="severe_level"]').parent().show(100);
      }
-
       function hideWater()
       {
             $('input[name="sensor_height"]').parent().hide(100);
@@ -280,9 +223,7 @@
             $('input[name="warning_level"]').parent().hide(100);
             $('input[name="severe_level"]').parent().hide(100); 
       }
-
      function getSensor(type,sensor){
-
              $('select[name="sensor_id"]').empty();
                     
                                 $.ajax({
@@ -292,16 +233,10 @@
                                     beforeSend: function(){
                                        // $('#loader').css("visibility", "visible");
                                     },
-
                                     success:function(data) {
-
                                         $('select[name="sensor_id"]').empty();
-
                                         $('select[name="sensor_id"]').append('<option selected value="">' + '--None--' + '</option>');
-
-
                                         $.each(data, function(key, value){  
-
                                             if(sensor==key)                                
                                                  $('select[name="sensor_id"]').append('<option selected value="'+ key +'">' + value + '</option>');
                                             else
@@ -313,31 +248,17 @@
                                        // $('#loader').css("visibility", "hidden");
                                     }
                                 });
-
-
-
      }
-
     $("input[placeholder],textarea,select").each(function () {
           // $(this).attr("data-placeholder", this.placeholder);
              this.placeholder = '';
     });
-
-
-
-
-
-
-
-
 /* Voyager function */
         var params = {};
         var $file;
-
         function deleteHandler(tag, isMulti) {
           return function() {
             $file = $(this).siblings(tag);
-
             params = {
                 slug:   '{{ $dataType->slug }}',
                 filename:  $file.data('file-name'),
@@ -346,15 +267,12 @@
                 multi: isMulti,
                 _token: '{{ csrf_token() }}'
             }
-
             $('.confirm_delete_name').text(params.filename);
             $('#confirm_delete_modal').modal('show');
           };
         }
-
         $('document').ready(function () {
             $('.toggleswitch').bootstrapToggle();
-
             //Init datepicker for date fields if data-datepicker attribute defined
             //or if browser does not handle date inputs
             $('.form-group input[type=date]').each(function (idx, elt) {
@@ -363,34 +281,28 @@
                     $(elt).datetimepicker($(elt).data('datepicker'));
                 }
             });
-
             @if ($isModelTranslatable)
                 $('.side-body').multilingual({"editing": true});
             @endif
-
             $('.side-body input[data-slug-origin]').each(function(i, el) {
                 $(el).slugify();
             });
-
             $('.form-group').on('click', '.remove-multi-image', deleteHandler('img', true));
             $('.form-group').on('click', '.remove-single-image', deleteHandler('img', false));
             $('.form-group').on('click', '.remove-multi-file', deleteHandler('a', true));
             $('.form-group').on('click', '.remove-single-file', deleteHandler('a', false));
-
             $('#confirm_delete').on('click', function(){
                 $.post('{{ route('voyager.media.remove') }}', params, function (response) {
                     if ( response
                         && response.data
                         && response.data.status
                         && response.data.status == 200 ) {
-
                         toastr.success(response.data.message);
                         $file.parent().fadeOut(300, function() { $(this).remove(); })
                     } else {
                         toastr.error("Error removing file.");
                     }
                 });
-
                 $('#confirm_delete_modal').modal('hide');
             });
             $('[data-toggle="tooltip"]').tooltip();

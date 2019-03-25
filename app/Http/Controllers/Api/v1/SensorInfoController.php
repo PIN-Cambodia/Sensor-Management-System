@@ -17,20 +17,12 @@ class SensorInfoController extends Controller
 
   public function getLocation(Request $request)
     {
-<<<<<<< HEAD
-        if($request->type==null)
-
-             $location=Location::with('Sensor')->get();
-
-        else
-            $location=Location::with('Sensor')->where('type',$request->type)->get();  
-=======
-     
+    
       if($request->type==null)
              $location=Location::with('Sensor')->get();
       else
            $location=Location::with('Sensor')->where('type',$request->type)->get();  
->>>>>>> master
+
 
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
@@ -44,16 +36,10 @@ class SensorInfoController extends Controller
 
           /*get sensor information in location*/
           $sensor=$value['sensor'];
-<<<<<<< HEAD
-          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();
-          $location_lang = $location_lang->translate('kh', 'fallbackLocale');
-          $name= $location_lang->name;
-          $comment= $location_lang->comment;         
-=======
+
 
           /* get the last information of datapoint in the location */
           $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
->>>>>>> master
           $features[] = array(
               'type' => 'Feature',
               'geometry' => array('type' => 'Point', 'coordinates' =>array((double)$value['latitude'],(double) $value['longitude']) ),
@@ -79,19 +65,13 @@ class SensorInfoController extends Controller
           'features' => $features,
       );
 
-<<<<<<< HEAD
-    $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
-      return  $final_data;
-=======
+
    // $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
   $final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
        
     
     return  $final_data;
 
-  
-
->>>>>>> master
     }
   }
 
