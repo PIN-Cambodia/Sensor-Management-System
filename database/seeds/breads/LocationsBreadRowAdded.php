@@ -253,7 +253,7 @@ class LocationsBreadRowAdded extends Seeder
                     'display_name' => 'Comment',
                     'required' => 0,
                     'browse' => 0,
-                    'read' => 0,
+                    'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
