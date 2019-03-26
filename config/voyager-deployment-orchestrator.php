@@ -10,4 +10,3 @@ return [
     ],
 ];
 
-//users,sensors,usertokens,datapoints,locations

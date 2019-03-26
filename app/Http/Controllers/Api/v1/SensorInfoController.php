@@ -6,26 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
 use Validator;
-
 use \DateTime;
 use App\Location;
 use App\Datapoint;
 use App\Sensor;
 class SensorInfoController extends Controller
 {
-
-
   public function getLocation(Request $request)
     {
      
       if($request->type==null)
+        /*Get all data by table Locations join with Sensors*/
              $location=Location::with('Sensor')->get();
       else
            $location=Location::with('Sensor')->where('type',$request->type)->get();  
 
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
-         
+          
           /* get translation in khmer for feild name and comment by location*/
           $translatekh = Location::withTranslations(['kh'])->where('id',(int) $value['id'])->get();    
           $translatekh = $translatekh->translate('kh', 'fallbackLocale');
@@ -37,7 +35,8 @@ class SensorInfoController extends Controller
           $sensor=$value['sensor'];
 
           /* get the last information of datapoint in the location */
-          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();         
+          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();    
+         // formate geojson
           $features[] = array(
               'type' => 'Feature',
               'geometry' => array('type' => 'Point', 'coordinates' =>array((double)$value['latitude'],(double) $value['longitude']) ),
@@ -55,48 +54,44 @@ class SensorInfoController extends Controller
                                      'commentkh'=>$commenkh,
                                     'trigger_levels'=>array('severe_warning'=>$value['severe_level'],'warning'=>$value['warning_level'],'watch_level'=>$value['watch_level']),
                                      )
-          );
+                              );
       }
 
        $new_data = array(
-          'type' => 'FeatureCollection',
+        'type' => 'FeatureCollection',
           'features' => $features,
       );
 
-   // $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
-  $final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
-       
-    
+      // $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
+      //use JSON_UNESCAPED_UNICODE when json has khmer values
+      $final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
     return  $final_data;
-
-  
-
     }
 
 
-    /* get information of Sensor datapoint */
+ /* Get information of Sensor Datapoint */
 
-    public function getSensorDatapoint(Request $request){
+  public function getSensorDatapoint(Request $request){
 
-           $fromdate=date($request->fromdate);
-           $todate=date($request->todate);
-           $sensor=Sensor::where('external_id',$request->external_id)->firstOrFail();
-           $data=Datapoint::with('Sensor')->where('sensor_id', $sensor->id);            
-           if($this->validateDate($fromdate) && $this->validateDate($todate))
-                 $data=$data->whereBetween('created_at',[$fromdate,$todate]);
+         $fromdate=date($request->fromdate);
+         $todate=date($request->todate);
+         $sensor=Sensor::where('external_id',$request->external_id)->firstOrFail();
+         $data=Datapoint::with('Sensor')->where('sensor_id', $sensor->id);
+          //  validation date format
+         if($this->validateDate($fromdate) && $this->validateDate($todate))
+               $data=$data->whereBetween('created_at',[$fromdate,$todate]);
 
-           $data=$data->orderby('created_at','desc');
-           $data=$data->get();
+         $data=$data->orderby('created_at','desc');
+         $data=$data->get();
 
-           return response()->json($data);
+         return response()->json($data);
 
-            //$data=Datapoint::find(1)->Sensor()->get();
-           //$data=Datapoint::with('Sensor')->get();
-           // $data=Datapoint::with('Sensor')->get();        
-           /* no get detail Sensor */
-           //$data=Sensor::where('external_id',$request->external_id)->firstOrFail()->Datapoint()->get(); 
-    }
-
+          //$data=Datapoint::find(1)->Sensor()->get();
+         //$data=Datapoint::with('Sensor')->get();
+         // $data=Datapoint::with('Sensor')->get();        
+         /* no get detail Sensor */
+         //$data=Sensor::where('external_id',$request->external_id)->firstOrFail()->Datapoint()->get(); 
+  }
 
     function validateDate($date, $format = 'Y-m-d H:i:s')
     {
@@ -106,65 +101,65 @@ class SensorInfoController extends Controller
 
 
 
-    /* post datapoint */
-    public function createDatapoint(Request $request)
-    { 
+    /* Create datapoint from users authorization*/
+  public function createDatapoint(Request $request)
+  { 
+    //check authorization users on create Datapoint
+    // add_datapoints is field name in permissions table
+     if(!Gate::allows('add_datapoints')){
+         return response()->json(['status'=>false,'message'=>'You have no permission']);
+     }
+     //end
 
-       if(!Gate::allows('add_datapoints')){
-           return response()->json(['status'=>false,'message'=>'You have no permission']);
-       }
-
-       $arrdata=
-                [
-                 'sensor_id'=>$request->sensor_id,
-                 'location_id'=>$request->location_id,
-                 'data'=>$request->data,
-                 'sensor_height'=>$request->sensor_height,
-                 'distance_report'=>$request->distance_report,
-                 'water_height'=>$request->water_height
-                 ];
-
-
-         $validator = Validator::make($request->all(), [
-              'sensor_id' => 'required',
-              'location_id' => 'required'
-                ]);
-
-          if ($validator->fails()) {
-              return response()->json(['status'=>false,'message'=>$validator->messages()]);
-          }
-
-          else{
-                  $datapoint=Datapoint::create($arrdata);        
-                  return response()->json(['status'=>true,'message'=>"Record created successfully",'data'=>$arrdata]);
-          }
-
-    }
+     $arrdata=
+              [
+               'sensor_id'=>$request->sensor_id,
+               'location_id'=>$request->location_id,
+               'data'=>$request->data,
+               'sensor_height'=>$request->sensor_height,
+               'distance_report'=>$request->distance_report,
+               'water_height'=>$request->water_height
+               ];
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateSensor(Request $request, $id)
-    {
+       $validator = Validator::make($request->all(), [
+            'sensor_id' => 'required',
+            'location_id' => 'required'
+              ]);
 
-       if(!Gate::allows('edit_sensors')){
-           return response()->json(['status'=>false,'message'=>'You have no permission']);
-       }
+        if ($validator->fails()) {
+            return response()->json(['status'=>false,'message'=>$validator->messages()]);
+        }
+
+        else{
+                $datapoint=Datapoint::create($arrdata);        
+                return response()->json(['status'=>true,'message'=>"Record created successfully",'data'=>$arrdata]);
+        }
+
+  }
 
 
-      
+  /**
+   * Update sensors from users authorization
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function updateSensor(Request $request, $id)
+  {
+      /* check authorization users on update sensors
+      edit_sensors is field name in permissions table*/
+     if(!Gate::allows('edit_sensors')){
+         return response()->json(['status'=>false,'message'=>'You have no permission']);
+     }
+      //end
        $arrdata=
                 [
                  'external_id'=>$request->external_id,
                  'type'=>$request->type,
                  'parameters'=>$request->parameters
                  ];
-
 
         $validator = Validator::make($request->all(), [
               'external_id' => 'required',
@@ -181,9 +176,6 @@ class SensorInfoController extends Controller
                 $sensor->update($arrdata);        
                 return response()->json(['status'=>true,'message'=>"Record updated successfully",'data'=>$arrdata]);
           }   
-
-
-
     }
 
     /**
