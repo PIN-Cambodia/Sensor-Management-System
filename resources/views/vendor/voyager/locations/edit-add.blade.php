@@ -142,18 +142,25 @@
 
     
      $(document).ready(function() { 
-
        
             /* block check language */
             $('input[name="name"]').attr("id","name");
             $('textarea[name="comment"]').attr("id","comment");
+            
+            /* this key layout using for switch key when user change language */
             $layout_en=VKey.layout.en; //key layout key for english, console.log($layout_en);
             $layout_km=VKey.layout.km;//key layout key for khmer, console.log($layout_km);
             
-            $layout_fld_name=new VKey.keyboard("name", "en");
-            $layout_fld_comment=new VKey.keyboard("comment", "en");
-          
-            
+            /* check default language by checking parrent class of #en/#kh, the value of class is btn btn-primary active */
+            $check_en_default=$('#en').parent().attr('class').indexOf("active"); //return -1 if not found active
+            $language="en";
+            if($check_en_default==-1)
+                  $language="km";    
+
+            /*set key layout for name and comment field */
+            $layout_fld_name=new VKey.keyboard("name", $language);
+            $layout_fld_comment=new VKey.keyboard("comment", $language);        
+ 
             /* when click on select language en or kh */
             $("#kh").focus(function() {
                    
@@ -250,10 +257,14 @@
    // end functions show and hide sensor rever type
      function getSensor(type,sensor){
 
+            //check null sensor, it will be true for add new record
+            if(!sensor)
+                sensor=0;
+           
              $('select[name="sensor_id"]').empty();
                     
                                 $.ajax({
-                                    url: '/sensor/get/'+type,
+                                    url: '/sensor/get/'+type+'/'+sensor,
                                     type:"GET",
                                     dataType:"json",
                                     beforeSend: function(){
