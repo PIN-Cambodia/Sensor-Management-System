@@ -139,7 +139,6 @@
 </script>
 
     <script>
-
     
      $(document).ready(function() { 
        
@@ -156,7 +155,6 @@
             $language="en";
             if($check_en_default==-1)
                   $language="km";    
-
             /*set key layout for name and comment field */
             $layout_fld_name=new VKey.keyboard("name", $language);
             $layout_fld_comment=new VKey.keyboard("comment", $language);        
@@ -167,35 +165,28 @@
                      $layout_fld_name.currentLayout=$layout_km;
                      $layout_fld_comment.currentLayout=$layout_km;
             });
-
             $("#en").focus(function() {
                    
                      $layout_fld_name.currentLayout=$layout_en;
                      $layout_fld_comment.currentLayout=$layout_en;
              });
-
             
             /*
                $('textarea[name="comment"]').attr("id","comment_kh");        
       
                     $('*[class*="form-control"]').each(function () {                 
-
                             new VKey.keyboard($(this).attr("id"), "km");
                     });         
      
                new VKey.keyboard("comment_kh", "km");
             */
-
-
             visibleWater("inline");
             getSensor($('select[name="type"]').val(),$('select[name="sensor_id"]').val());
             
-
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
                 //Call function getSensors for getting  lists of sensors base on types
                 getSensor(typeId,'');
-
                 // Check Sensors type for show or hide properties of that sensor
                 switch(typeId){
                     case 'Air':                        
@@ -209,25 +200,20 @@
                          visibleWater("none");
                          hideWater();
                     break;
-
                 }
             
             });
-
             // Use title attribute for Tool tip to description more information of that fields
-
             $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
             $('input[name="watch_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Watch' status");
             $('input[name="warning_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Warning' status");
             $('input[name="severe_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Severe Warning' status");
-
             $(document).tooltip({ selector: "[title]",
                               placement: "bottom",
                               trigger: "focus",
                               animation: false}); 
             //end tool tip
      });
-
 /*Function show and hide sensor rever type*/
      function visibleWater(status)
      {
@@ -236,17 +222,13 @@
             $('input[name="warning_level"]').parent().css("display",status);
             $('input[name="severe_level"]').parent().css("display",status);
      }
-
      function showWater()
      {       
-
             $('input[name="sensor_height"]').parent().show(100);
             $('input[name="watch_level"]').parent().show(100);
             $('input[name="warning_level"]').parent().show(100);
             $('input[name="severe_level"]').parent().show(100);
      }
-
-
       function hideWater()
       {
             $('input[name="sensor_height"]').parent().hide(100);
@@ -256,7 +238,6 @@
       }
    // end functions show and hide sensor rever type
      function getSensor(type,sensor){
-
             //check null sensor, it will be true for add new record
             if(!sensor)
                 sensor=0;
@@ -270,16 +251,10 @@
                                     beforeSend: function(){
                                        // $('#loader').css("visibility", "visible");
                                     },
-
                                     success:function(data) {
-
                                         $('select[name="sensor_id"]').empty();
-
                                         $('select[name="sensor_id"]').append('<option selected value="">' + '--None--' + '</option>');
-
-
                                         $.each(data, function(key, value){  
-
                                             if(sensor==key)                                
                                                  $('select[name="sensor_id"]').append('<option selected value="'+ key +'">' + value + '</option>');
                                             else
@@ -291,31 +266,19 @@
                                        // $('#loader').css("visibility", "hidden");
                                     }
                                 });
-
-
-
      }
-
     $("input[placeholder],textarea,select").each(function () {
           // $(this).attr("data-placeholder", this.placeholder);
              this.placeholder = '';
     });
 
-
-
-
-
-
-
-
+    
 /* Voyager function */
         var params = {};
         var $file;
-
         function deleteHandler(tag, isMulti) {
           return function() {
             $file = $(this).siblings(tag);
-
             params = {
                 slug:   '{{ $dataType->slug }}',
                 filename:  $file.data('file-name'),
@@ -324,15 +287,12 @@
                 multi: isMulti,
                 _token: '{{ csrf_token() }}'
             }
-
             $('.confirm_delete_name').text(params.filename);
             $('#confirm_delete_modal').modal('show');
           };
         }
-
         $('document').ready(function () {
             $('.toggleswitch').bootstrapToggle();
-
             //Init datepicker for date fields if data-datepicker attribute defined
             //or if browser does not handle date inputs
             $('.form-group input[type=date]').each(function (idx, elt) {
@@ -341,34 +301,28 @@
                     $(elt).datetimepicker($(elt).data('datepicker'));
                 }
             });
-
             @if ($isModelTranslatable)
                 $('.side-body').multilingual({"editing": true});
             @endif
-
             $('.side-body input[data-slug-origin]').each(function(i, el) {
                 $(el).slugify();
             });
-
             $('.form-group').on('click', '.remove-multi-image', deleteHandler('img', true));
             $('.form-group').on('click', '.remove-single-image', deleteHandler('img', false));
             $('.form-group').on('click', '.remove-multi-file', deleteHandler('a', true));
             $('.form-group').on('click', '.remove-single-file', deleteHandler('a', false));
-
             $('#confirm_delete').on('click', function(){
                 $.post('{{ route('voyager.media.remove') }}', params, function (response) {
                     if ( response
                         && response.data
                         && response.data.status
                         && response.data.status == 200 ) {
-
                         toastr.success(response.data.message);
                         $file.parent().fadeOut(300, function() { $(this).remove(); })
                     } else {
                         toastr.error("Error removing file.");
                     }
                 });
-
                 $('#confirm_delete_modal').modal('hide');
             });
             $('[data-toggle="tooltip"]').tooltip();
