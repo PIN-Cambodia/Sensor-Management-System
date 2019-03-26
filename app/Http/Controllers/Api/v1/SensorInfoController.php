@@ -190,9 +190,17 @@ class SensorInfoController extends Controller
     }
 
     /* for display sensor in select box in page location */
-
-    public function getSensor($type){
-      $sensor=\DB::table("sensors")->where("type",$type)->pluck("external_id","id");
+    public function getSensor($type,$sensor_id=0){
+      //$sensor=\DB::table("sensors")
+      $sensor=Sensor::where("type",$type)
+      ->whereNotIn('id',function($query){
+                            $query->select('sensor_id')->where('sensor_id','!=','NULL')->from('locations');}
+                  );
+      if($sensor_id!=0)//check for when you click on edit location, the sensor will be exist
+          $sensor=$sensor->orWhere('id',$sensor_id);
+      $sensor=$sensor->pluck("external_id","id");
       return json_encode($sensor);
     }
+
+
 }
