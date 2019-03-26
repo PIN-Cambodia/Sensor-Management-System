@@ -182,9 +182,14 @@
 
             visibleWater("inline");
             getSensor($('select[name="type"]').val(),$('select[name="sensor_id"]').val());
+            
+
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
+                //Call function getSensors for getting  lists of sensors base on types
                 getSensor(typeId,'');
+
+                // Check Sensors type for show or hide properties of that sensor
                 switch(typeId){
                     case 'Air':                        
                          hideWater();
@@ -199,9 +204,10 @@
                     break;
 
                 }
-              //sensor_id Do something
-
+            
             });
+
+            // Use title attribute for Tool tip to description more information of that fields
 
             $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
             $('input[name="watch_level"]').attr("title","Distance in mm from riverbed to water level to trigger 'Watch' status");
@@ -212,10 +218,10 @@
                               placement: "bottom",
                               trigger: "focus",
                               animation: false}); 
-
+            //end tool tip
      });
 
-
+/*Function show and hide sensor rever type*/
      function visibleWater(status)
      {
             $('input[name="sensor_height"]').parent().css("display",status);
@@ -233,6 +239,7 @@
             $('input[name="severe_level"]').parent().show(100);
      }
 
+
       function hideWater()
       {
             $('input[name="sensor_height"]').parent().hide(100);
@@ -240,7 +247,7 @@
             $('input[name="warning_level"]').parent().hide(100);
             $('input[name="severe_level"]').parent().hide(100); 
       }
-
+   // end functions show and hide sensor rever type
      function getSensor(type,sensor){
 
              $('select[name="sensor_id"]').empty();
