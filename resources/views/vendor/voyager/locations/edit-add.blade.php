@@ -250,10 +250,14 @@
 
      function getSensor(type,sensor){
 
+            //check null sensor, it will be true for add new record
+            if(!sensor)
+                sensor=0;
+           
              $('select[name="sensor_id"]').empty();
                     
                                 $.ajax({
-                                    url: '/sensor/get/'+type,
+                                    url: '/sensor/get/'+type+'/'+sensor,
                                     type:"GET",
                                     dataType:"json",
                                     beforeSend: function(){
