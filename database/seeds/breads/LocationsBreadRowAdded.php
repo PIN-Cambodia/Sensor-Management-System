@@ -98,6 +98,21 @@ class LocationsBreadRowAdded extends Seeder
                 5 => 
                 [
                     'data_type_id' => $dataType->id,
+                    'field' => 'location_belongsto_sensor_relationship',
+                    'type' => 'relationship',
+                    'display_name' => 'sensors',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{"model":"App\\\\Sensor","table":"sensors","type":"belongsTo","column":"sensor_id","key":"id","label":"external_id","pivot_table":"categories","pivot":"0","taggable":"0"}',
+                    'order' => 6,
+                ],
+                6 => 
+                [
+                    'data_type_id' => $dataType->id,
                     'field' => 'sensor_id',
                     'type' => 'select_dropdown',
                     'display_name' => 'Sensor Id',
@@ -108,9 +123,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{"validation":{"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
-                    'order' => 6,
+                    'order' => 7,
                 ],
-                6 => 
+                7 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'created_at',
@@ -123,9 +138,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
-                    'order' => 7,
+                    'order' => 8,
                 ],
-                7 => 
+                8 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'updated_at',
@@ -138,9 +153,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
-                    'order' => 8,
+                    'order' => 9,
                 ],
-                8 => 
+                9 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'deleted_at',
@@ -153,9 +168,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
-                    'order' => 9,
+                    'order' => 10,
                 ],
-                9 => 
+                10 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'sensor_height',
@@ -168,9 +183,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0}',
-                    'order' => 10,
+                    'order' => 11,
                 ],
-                10 => 
+                11 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'watch_level',
@@ -183,9 +198,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0,"title":"Hello watch level"}',
-                    'order' => 11,
+                    'order' => 12,
                 ],
-                11 => 
+                12 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'warning_level',
@@ -198,9 +213,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0}',
-                    'order' => 12,
+                    'order' => 13,
                 ],
-                12 => 
+                13 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'severe_level',
@@ -213,9 +228,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0}',
-                    'order' => 13,
+                    'order' => 14,
                 ],
-                13 => 
+                14 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'status',
@@ -228,9 +243,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"default":"Test","options":{"Test":"Test","Planed":"Planed","Operational":"Operational"},"validation":{"rule":["required"],"messages":{"required":"The status field is required."}}}',
-                    'order' => 14,
+                    'order' => 15,
                 ],
-                14 => 
+                15 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'comment',
@@ -243,21 +258,6 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'order' => 15,
-                ],
-                15 => 
-                [
-                    'data_type_id' => $dataType->id,
-                    'field' => 'location_belongsto_sensor_relationship',
-                    'type' => 'relationship',
-                    'display_name' => 'sensors',
-                    'required' => 0,
-                    'browse' => 1,
-                    'read' => 1,
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
-                    'details' => '{"model":"App\\\\Sensor","table":"sensors","type":"belongsTo","column":"sensor_id","key":"id","label":"external_id","pivot_table":"categories","pivot":"0","taggable":"0"}',
                     'order' => 16,
                 ],
             ]);
