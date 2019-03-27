@@ -138,6 +138,8 @@
 <script src="{{asset('js/km.js')}}">
 </script>
 
+ 
+
     <script>
 
     
@@ -194,7 +196,7 @@
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
                 //Call function getSensors for getting  lists of sensors base on types
-                getSensor(typeId,'');
+                getSensor(typeId,'0');
 
                 // Check Sensors type for show or hide properties of that sensor
                 switch(typeId){
@@ -212,6 +214,10 @@
 
                 }
             
+            });
+
+            $('select[name="sensor_id"]').select2().on('select2-focus', function(){
+                             $(this).select2('open');
             });
 
             // Use title attribute for Tool tip to description more information of that fields
@@ -263,7 +269,7 @@
            
              $('select[name="sensor_id"]').empty();
                     
-                                $.ajax({
+                              $.ajax({
                                     url: '/sensor/get/'+type+'/'+sensor,
                                     type:"GET",
                                     dataType:"json",
@@ -271,9 +277,7 @@
                                        // $('#loader').css("visibility", "visible");
                                     },
 
-                                    success:function(data) {
-
-                                        $('select[name="sensor_id"]').empty();
+                                    success:function(data) {                                       
 
                                         $('select[name="sensor_id"]').append('<option selected value="">' + '--None--' + '</option>');
 
@@ -291,7 +295,7 @@
                                        // $('#loader').css("visibility", "hidden");
                                     }
                                 });
-
+  
 
 
      }
