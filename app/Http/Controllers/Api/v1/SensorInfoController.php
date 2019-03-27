@@ -39,7 +39,7 @@ class SensorInfoController extends Controller
          // formate geojson
           $features[] = array(
               'type' => 'Feature',
-              'geometry' => array('type' => 'Point', 'coordinates' =>array((double)$value['latitude'],(double) $value['longitude']) ),
+              'geometry' => array('type' => 'Point', 'coordinates' =>array((double) $value['longitude'],(double)$value['latitude']) ),
               'properties' => array(
                                     'id'=> $value['id'],
                                     'name' => $value['name'],
