@@ -92,10 +92,25 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                'details' => '{"validation":{"rule":["numeric"]}}',
+                'details' => '{"validation":{"rule":["numeric"]},"default":0}',
                     'order' => 5,
                 ],
                 5 => 
+                [
+                    'data_type_id' => $dataType->id,
+                    'field' => 'location_belongsto_sensor_relationship',
+                    'type' => 'relationship',
+                    'display_name' => 'sensors',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{"model":"App\\\\Sensor","table":"sensors","type":"belongsTo","column":"sensor_id","key":"id","label":"external_id","pivot_table":"categories","pivot":"0","taggable":"0"}',
+                    'order' => 6,
+                ],
+                6 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'sensor_id',
@@ -107,10 +122,10 @@ class LocationsBreadRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                'details' => '{"validation":{"rule":["unique:locations,name"],"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
-                    'order' => 6,
+                    'details' => '{"validation":{"messages":{"unique":"The sensor has already been taken."}},"relationship":{"key":"id","label":"name","Sensor_slug":"Sensor"},"default":"","null":"","options":{"":"-- None --"}}',
+                    'order' => 7,
                 ],
-                6 => 
+                7 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'created_at',
@@ -123,9 +138,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
-                    'order' => 7,
+                    'order' => 8,
                 ],
-                7 => 
+                8 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'updated_at',
@@ -138,9 +153,9 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
-                    'order' => 8,
+                    'order' => 9,
                 ],
-                8 => 
+                9 => 
                 [
                     'data_type_id' => $dataType->id,
                     'field' => 'deleted_at',
@@ -153,21 +168,6 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 0,
                     'delete' => 0,
                     'details' => '{}',
-                    'order' => 9,
-                ],
-                9 => 
-                [
-                    'data_type_id' => $dataType->id,
-                    'field' => 'location_belongsto_sensor_relationship',
-                    'type' => 'relationship',
-                    'display_name' => 'sensor',
-                    'required' => 0,
-                    'browse' => 1,
-                    'read' => 1,
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
-                    'details' => '{"model":"App\\\\Sensor","table":"sensors","type":"belongsTo","column":"sensor_id","key":"id","label":"external_id","pivot_table":"categories","pivot":"0","taggable":"0"}',
                     'order' => 10,
                 ],
                 10 => 
@@ -183,7 +183,7 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0}',
-                    'order' => 10,
+                    'order' => 11,
                 ],
                 11 => 
                 [
@@ -198,7 +198,7 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0,"title":"Hello watch level"}',
-                    'order' => 11,
+                    'order' => 12,
                 ],
                 12 => 
                 [
@@ -213,7 +213,7 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0}',
-                    'order' => 12,
+                    'order' => 13,
                 ],
                 13 => 
                 [
@@ -228,7 +228,7 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"validation":{"rule":["numeric"]},"default":0}',
-                    'order' => 13,
+                    'order' => 14,
                 ],
                 14 => 
                 [
@@ -243,7 +243,7 @@ class LocationsBreadRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                 'details' => '{"default":"Test","options":{"Test":"Test","Planed":"Planed","Operational":"Operational"},"validation":{"rule":["required"],"messages":{"required":"The status field is required."}}}',
-                    'order' => 14,
+                    'order' => 15,
                 ],
                 15 => 
                 [
@@ -253,12 +253,12 @@ class LocationsBreadRowAdded extends Seeder
                     'display_name' => 'Comment',
                     'required' => 0,
                     'browse' => 0,
-                    'read' => 1,
+                    'read' => 0,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'order' => 15,
+                    'order' => 16,
                 ],
             ]);
         } catch(Exception $e) {

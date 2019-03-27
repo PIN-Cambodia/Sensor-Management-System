@@ -9,6 +9,7 @@ class Location extends Model
 {
     use Translatable;
     protected $translatable = ['name', 'comment'];
+    
     public function Sensor(){
     	return $this->belongsTo('App\Sensor');
     }
