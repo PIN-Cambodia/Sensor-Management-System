@@ -214,6 +214,11 @@
             
             });
 
+            // stop searching sensor_id option when focus or select
+            $('select[name="sensor_id"]').select2().on('select2-focus', function(){
+                $(this).select2('open');
+            });
+
             // Use title attribute for Tool tip to description more information of that fields
 
             $('input[name="sensor_height"]').attr("title","Distance from riverbed to sensor in mm");
@@ -263,7 +268,7 @@
            
              $('select[name="sensor_id"]').empty();
                     
-                                $.ajax({
+                            $.ajax({
                                     url: '/sensor/get/'+type+'/'+sensor,
                                     type:"GET",
                                     dataType:"json",
@@ -273,7 +278,6 @@
 
                                     success:function(data) {
 
-                                        $('select[name="sensor_id"]').empty();
 
                                         $('select[name="sensor_id"]').append('<option selected value="">' + '--None--' + '</option>');
 
