@@ -23,8 +23,8 @@ Route::prefix('v1')->namespace('Api')->group(function(){
 	/*Generate json data from sensor location to geojson */
 	Route::get('location.geojson','v1\SensorInfoController@getLocation');
 	// Get data from Sensor Datapoint
-	Route::get('sensors/{external_id}/datapoints','v1\SensorInfoController@getSensorDatapoint');
-	
+	Route::get('sensors/{external_id}/datapoints/{n_record}','v1\SensorInfoController@getSensorDatapoint');
+
 });
 
 /*Group data authentication */
