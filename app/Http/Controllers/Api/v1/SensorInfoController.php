@@ -20,7 +20,6 @@ class SensorInfoController extends Controller
              $location=Location::with('Sensor')->get();
       else
            $location=Location::with('Sensor')->where('type',$request->type)->get();  
-
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
           
@@ -73,18 +72,56 @@ class SensorInfoController extends Controller
 
   public function getSensorDatapoint(Request $request){
 
+
+ 
+
          $fromdate=date($request->fromdate);
          $todate=date($request->todate);
-         $sensor=Sensor::where('external_id',$request->external_id)->firstOrFail();
-         $data=Datapoint::with('Sensor')->where('sensor_id', $sensor->id);
+
+         $sensor=Sensor::with('Location')->where('external_id',$request->external_id)->first();
+ 
+  //return response()->json($sensor);
+
+         $data=Datapoint::where('sensor_id', $sensor->id);
+
+        
+
           //  validation date format
          if($this->validateDate($fromdate) && $this->validateDate($todate))
                $data=$data->whereBetween('created_at',[$fromdate,$todate]);
-
-         $data=$data->orderby('created_at','desc');
+         $data=$data->orderby('created_at','desc')->take($request->n_record);
          $data=$data->get();
 
-         return response()->json($data);
+
+    
+          
+      foreach($data as $key => $value) {  
+          
+                            $record[]=array(
+                                            'type'=>'record',
+                                            'id'=>$value['id'],
+                                            'timestamp'=>$value['created_at'],
+                                            'height'=>'302',
+                                            'voltage'=>'5000'
+
+                                            );
+                                  
+      }
+
+
+
+      $features_datapoint= array(
+                            'type'=>'from_my_database',
+                            'sensorID'=>$sensor->external_id,
+                            'sensorName'=>$sensor->location[0]->name,
+                            'warningThreshold'=>'330',
+                            'alertThreshold'=>'350',
+                            'record'=>$record,
+                                    );
+
+       // return response()->json($data);
+     $result = json_encode($features_datapoint, JSON_UNESCAPED_UNICODE);
+     return  $result;
 
           //$data=Datapoint::find(1)->Sensor()->get();
          //$data=Datapoint::with('Sensor')->get();

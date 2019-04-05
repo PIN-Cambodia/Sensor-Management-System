@@ -13,5 +13,9 @@ class Location extends Model
     public function Sensor(){
     	return $this->belongsTo('App\Sensor');
     }
+
+      public function Datapoint(){
+    	return $this->hasMany('App\Datapoint');
+    }
   
 }

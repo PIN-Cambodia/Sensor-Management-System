@@ -11,6 +11,8 @@ class Datapoint extends Model
     public function Sensor(){
     	return $this->belongsTo('App\Sensor');
     }
-
+       public function Location(){
+    	return $this->belongsTo('App\Location');
+    }
  
 }
