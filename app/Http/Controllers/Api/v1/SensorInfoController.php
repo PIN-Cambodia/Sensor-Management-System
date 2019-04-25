@@ -17,9 +17,10 @@ class SensorInfoController extends Controller
      
       if($request->type==null)
         /*Get all data by table Locations join with Sensors*/
-             $location=Location::with('Sensor')->get();
+           $location=Location::with('Sensor')->get();
       else
            $location=Location::with('Sensor')->where('type',$request->type)->get();  
+      
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
           
@@ -36,6 +37,42 @@ class SensorInfoController extends Controller
           /* get the last information of datapoint in the location */
           $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();    
          // formate geojson
+         //return $datapoint;
+          $status='';       
+          $createDate=$datapoint!=null ? $datapoint->created_at : date("Y-m-d H:i:s");
+
+/*switch condition change icon sensor color  it work with javascript in page map.js*/
+          switch ($value['status']) {
+            case 'Operational':           
+              $datetime1 = new DateTime(date("Y-m-d H:i:s"));
+              $datetime2 = new DateTime($createDate);
+              //call function GetHourFromDate 
+              $hours=$this->GetHourFromDate($datetime1,$datetime2);
+
+                if($hours<24 && $datapoint!=null ) {
+                      $status='active';
+                      if($datapoint->water_height>=$value['watch_level'] && $datapoint->water_height<$value['warning_level'])
+                           $status='watch';
+                      else if($datapoint->water_height>=$value['warning_level'] && $datapoint->water_height<$value['severe_level'])
+                           $status='warning';
+                      else if($datapoint->water_height>=$value['severe_level']) 
+                          $status='severe_warning';
+                  }
+                else
+                    $status='inactive';
+              break;
+            case 'planed':
+               $status=$value['status'];
+              break;
+            default:
+               $status='inactive';
+              break;
+          }
+/*end switch*/
+
+
+
+/*json format mapping geojson*/
           $features[] = array(
               'type' => 'Feature',
               'geometry' => array('type' => 'Point', 'coordinates' =>array((double) $value['longitude'],(double)$value['latitude']) ),
@@ -47,7 +84,8 @@ class SensorInfoController extends Controller
                                     'sensor_height'=> ($datapoint!=null ? $datapoint->sensor_height : NULL), 
                                     'distance_report'=>($datapoint!=null ? $datapoint->distance_report : NULL),                         
                                     'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
-                                    'status'=>$value['status'],
+                                    'status1'=>$value['status'],
+                                    'status'=>$status,
                                     'type'=>$value['Type'],
                                     'comment'=>$value['comment'],
                                      'commentkh'=>$commenkh,
@@ -55,6 +93,7 @@ class SensorInfoController extends Controller
                                      )
                               );
       }
+      /*close foreach location*/
 
        $new_data = array(
         'type' => 'FeatureCollection',
@@ -69,46 +108,69 @@ class SensorInfoController extends Controller
 
 
  /* Get information of Sensor Datapoint */
+ /*Grap desplay sensor api*/
+ public function sensor_event(Request $request){
+  /*this if use prevent when users access to sensor_event api without sensor id*/
+  if($request->external_id==null){
+    return "you have no sensor information.";
+  }
+  /*end if*/
+  $fromdate=date($request->start);
+  $todate=date($request->end);
+  $sensor=Sensor::with('Location')->where('external_id',$request->external_id)->first();
+  $data=Datapoint::where('sensor_id', $sensor->id);
+  $data=$data->get();
+  /*foreach data only datatime with water height only for json format display graph sensors on map*/
+     foreach($data as $key => $value) {  
 
+                    $time=$value['created_at'];
+                    //add 7 hours for Cambodia format timezone
+                    $time= $time->modify("+7 hours");
+                    $time= $time->format('Y-m-d\TH:i:s');
+
+                          $record[]=array(
+
+                                          'value' => array($time,$value['water_height']
+                                          )
+                                          );                                         
+                                
+                                  }
+                    //$soArray = json_decode($json, true);
+                      //return $soArray;
+                          return response()->json($record);
+
+     }
+  /*end graph sensor api on map*/
+
+
+
+
+// /////This function getsensor datapoint for desplay on mapping/////////////////////
+  /*This is old format json api but we don't use it this website*/
   public function getSensorDatapoint(Request $request){
-
-
- 
 
          $fromdate=date($request->fromdate);
          $todate=date($request->todate);
-
          $sensor=Sensor::with('Location')->where('external_id',$request->external_id)->first();
- 
-  //return response()->json($sensor);
-
+          //return response()->json($sensor);
          $data=Datapoint::where('sensor_id', $sensor->id);
-
-        
-
           //  validation date format
          if($this->validateDate($fromdate) && $this->validateDate($todate))
                $data=$data->whereBetween('created_at',[$fromdate,$todate]);
-         $data=$data->orderby('created_at','desc')->take($request->n_record);
-         $data=$data->get();
+               $data=$data->orderby('created_at','desc')->take($request->n_record);
+               $data=$data->get();
 
+                foreach($data as $key => $value) {  
+                    
+                                      $record[]=array(
+                                                      'type'=>'record',
+                                                      'id'=>$value['id'],
+                                                      'timestamp'=>$value['created_at'],
+                                                      'height'=>'302',
+                                                      'voltage'=>'5000'
 
-    
-          
-      foreach($data as $key => $value) {  
-          
-                            $record[]=array(
-                                            'type'=>'record',
-                                            'id'=>$value['id'],
-                                            'timestamp'=>$value['created_at'],
-                                            'height'=>'302',
-                                            'voltage'=>'5000'
-
-                                            );
-                                  
-      }
-
-
+                                                      );
+                }
 
       $features_datapoint= array(
                             'type'=>'from_my_database',
@@ -239,5 +301,16 @@ class SensorInfoController extends Controller
       return json_encode($sensor);
     }
 
+/*GetHourFromDate use to compare date hours for motify sensor display with active or inactive by less or more 24 hours*/
+  public  function GetHourFromDate($datetime1,$datetime2){
 
+      $datetime1->modify("+7 hours");
+      $datetime1->format("Y-m-d H:i");      
+      $interval = $datetime1->diff($datetime2);
+      $hours = $interval->h;
+      $hours = $hours + ($interval->days*24);
+      return $hours;
+    }
+
+/*end GetHourFromDate */
 }
