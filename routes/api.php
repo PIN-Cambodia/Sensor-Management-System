@@ -22,8 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->namespace('Api')->group(function(){
 	/*Generate json data from sensor location to geojson */
 	Route::get('location.geojson','v1\SensorInfoController@getLocation');
-	// Get data from Sensor Datapoint
+	// Get data from Sensor Datapoint(no use)
 	Route::get('sensors/{external_id}/datapoints/{n_record}','v1\SensorInfoController@getSensorDatapoint');
+	/*get json api datapoint dispay on sensor graph on mapping*/
+	Route::get('sensors/sensor_event','v1\SensorInfoController@sensor_event');
 
 });
 
@@ -31,7 +33,7 @@ Route::prefix('v1')->namespace('Api')->group(function(){
 Route::group(['namespace'=>'Api','prefix'=>'v1','middleware'=>['auth:api']],function(){	
 	Route::post('sensors/{external_id}/datapoints','v1\SensorInfoController@createDatapoint');
 	Route::post('sensors/{external_id}','v1\SensorInfoController@updateSensor');	
-	
+		
 });
 
 
