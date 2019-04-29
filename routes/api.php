@@ -25,6 +25,8 @@ Route::prefix('v1')->namespace('Api')->group(function(){
 	// Get data from Sensor Datapoint
 	Route::get('sensors/{external_id}/datapoints/{n_record}','v1\SensorInfoController@getSensorDatapoint');
 
+	Route::get('sensors/datapoints','v1\SensorInfoController@getSensorDatapointTest');
+
 });
 
 /*Group data authentication */

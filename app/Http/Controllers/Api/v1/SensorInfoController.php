@@ -70,6 +70,18 @@ class SensorInfoController extends Controller
 
  /* Get information of Sensor Datapoint */
 
+ public function getSensorDatapointTest(Request $request){
+// JSON string
+  $soJSON = '[{"value":["2019-04-22T01:30:26.139Z",0]},{"value":["2019-04-22T01:45:27.173Z",0]},{"value":["2019-04-22T02:00:26.190Z",0]},{"value":["2019-04-22T02:15:26.714Z",0]},{"value":["2019-04-22T02:30:27.014Z",0]},{"value":["2019-04-22T02:45:26.261Z",0]},{"value":["2019-04-22T03:00:26.890Z",0]},{"value":["2019-04-22T03:30:25.818Z",0]},{"value":["2019-04-22T03:45:26.074Z",0]},{"value":["2019-04-22T04:00:26.061Z",0]},{"value":["2019-04-22T04:15:26.235Z",0]},{"value":["2019-04-22T04:31:08.899Z",0]},{"value":["2019-04-22T05:00:27.318Z",0]},{"value":["2019-04-22T05:15:25.521Z",0]},{"value":["2019-04-22T05:45:32.410Z",0]},{"value":["2019-04-22T06:00:25.526Z",0]},{"value":["2019-04-22T06:15:26.070Z",0]},{"value":["2019-04-22T06:30:26.241Z",0]},{"value":["2019-04-22T06:45:26.512Z",0]},{"value":["2019-04-22T07:15:25.676Z",0]}]';
+
+  // Convert JSON string to Array
+  $soArray = json_decode($soJSON, true);
+ // return $soArray[0]["name"]; // Access Array data
+
+  return  $soArray;
+
+ }
+
   public function getSensorDatapoint(Request $request){
 
 
