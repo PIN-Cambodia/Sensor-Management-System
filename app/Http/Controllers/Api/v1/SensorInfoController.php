@@ -143,8 +143,6 @@ class SensorInfoController extends Controller
   /*end graph sensor api on map*/
 
 
-
-
 // /////This function getsensor datapoint for desplay on mapping/////////////////////
   /*This is old format json api but we don't use it this website*/
   public function getSensorDatapoint(Request $request){

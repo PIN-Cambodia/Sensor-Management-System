@@ -138,6 +138,8 @@
 <script src="{{asset('js/km.js')}}">
 </script>
 
+ 
+
     <script>
 
     
@@ -194,7 +196,7 @@
             $('select[name="type"]').on('select2:select', function (e) {
                 var typeId = $(this).val();
                 //Call function getSensors for getting  lists of sensors base on types
-                getSensor(typeId,'');
+                getSensor(typeId,'0');
 
                 // Check Sensors type for show or hide properties of that sensor
                 switch(typeId){
@@ -213,6 +215,7 @@
                 }
             
             });
+
 
             // stop searching sensor_id option when focus or select
             $('select[name="sensor_id"]').select2().on('select2-focus', function(){
@@ -269,6 +272,7 @@
              $('select[name="sensor_id"]').empty();
                     
                             $.ajax({
+
                                     url: '/sensor/get/'+type+'/'+sensor,
                                     type:"GET",
                                     dataType:"json",
@@ -295,7 +299,7 @@
                                        // $('#loader').css("visibility", "hidden");
                                     }
                                 });
-
+  
 
 
      }

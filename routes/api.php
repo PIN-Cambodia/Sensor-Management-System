@@ -27,6 +27,8 @@ Route::prefix('v1')->namespace('Api')->group(function(){
 	/*get json api datapoint dispay on sensor graph on mapping*/
 	Route::get('sensors/sensor_event','v1\SensorInfoController@sensor_event');
 
+	Route::get('sensors/datapoints','v1\SensorInfoController@getSensorDatapointTest');
+
 });
 
 /*Group data authentication */
