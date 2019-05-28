@@ -208,10 +208,12 @@ class SensorInfoController extends Controller
      }
      //end
 
-     $arrdata=
+    $sensor=Sensor::with('Location')->where('external_id',$request->external_id)->first();
+
+    $arrdata=
               [
-               'sensor_id'=>$request->sensor_id,
-               'location_id'=>$request->location_id,
+               'sensor_id'=>$sensor->id,
+               'location_id'=>$sensor->location[0]->id,
                'data'=>$request->data,
                'sensor_height'=>$request->sensor_height,
                'distance_report'=>$request->distance_report,
