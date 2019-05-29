@@ -215,16 +215,18 @@ class SensorInfoController extends Controller
                'sensor_id'=>$sensor->id,
                'location_id'=>$sensor->location[0]->id,
                'data'=>$request->data,
-               'sensor_height'=>$request->sensor_height,
+               'sensor_height'=>$sensor->location[0]->sensor_height,
                'distance_report'=>$request->distance_report,
                'water_height'=>$request->water_height
                ];
 
-
+              
        $validator = Validator::make($request->all(), [
-            'sensor_id' => 'required',
-            'location_id' => 'required'
+            /*'sensor_id' => 'required',
+            'location_id' => 'required', */    
+
               ]);
+        
 
         if ($validator->fails()) {
             return response()->json(['status'=>false,'message'=>$validator->messages()]);
