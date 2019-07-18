@@ -219,7 +219,7 @@ class SensorInfoController extends Controller
                'distance_report'=>$request->distance_report,
                ];
 
-    if(!isset($request->water_height)) {
+    if(isset($request->water_height)) {
         $arrdata['water_height'] = $request->water_height;
     } else {
         $arrdata['water_height'] = $arrdata['sensor_height'] - $arrdata['distance_report'];
