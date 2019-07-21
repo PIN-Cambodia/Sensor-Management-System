@@ -111,24 +111,24 @@ class SensorInfoController extends Controller
  /*Grap desplay sensor api*/
  public function sensor_event(Request $request){
     /*this if use prevent when users access to sensor_event api without sensor id*/
-    if(!$request->has('external_id') && !$request->has('location')){
+    if(!$request->query->has('external_id') && !$request->query->has('location')){
         return "Please provide either sensor or location id";
     }
     /*end if*/
 
-    $from = strtotime('-6 hours');
-    $to = time();
-    if($request->has('starttime'))
-        $from = strtotime($request->get('starttime'));
+    $start = strtotime('-6 hours');
+    $end = time();
+    if($request->query->has('start'))
+        $start = strtotime($request->query->get('start'));
 
-    if($request->has('endtime'))
-        $to = strtotime($request->get('endtime'));
+    if($request->query->has('end'))
+        $end = strtotime($request->query->get('end'));
 
-    if($request->has('external_id')) {
-        $sensor = Sensor::with('Location')->where('external_id', $request->get('external_id'))->first();
-        $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$from, $to])->get();
+    if($request->query->has('external_id')) {
+        $sensor = Sensor::with('Location')->where('external_id', $request->query->get('external_id'))->first();
+        $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$start, $end])->get();
     } else {
-        $data = Datapoint::where('location_id', $request->get('location'))->whereBetween('created_at', [$from, $to])->get();
+        $data = Datapoint::where('location_id', $request->query->get('location'))->whereBetween('created_at', [$start, $end])->get();
     }
 
     $records = [];
