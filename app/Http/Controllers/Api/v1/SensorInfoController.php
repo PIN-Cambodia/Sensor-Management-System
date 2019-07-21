@@ -110,16 +110,23 @@ class SensorInfoController extends Controller
  /* Get information of Sensor Datapoint */
  /*Grap desplay sensor api*/
  public function sensor_event(Request $request){
-  /*this if use prevent when users access to sensor_event api without sensor id*/
-  if($request->external_id==null){
+    /*this if use prevent when users access to sensor_event api without sensor id*/
+    if($request->external_id==null){
     return "you have no sensor information.";
-  }
-  /*end if*/
-  $fromdate=date($request->start);
-  $todate=date($request->end);
-  $sensor=Sensor::with('Location')->where('external_id',$request->external_id)->first();
-  $data=Datapoint::where('sensor_id', $sensor->id);
-  $data=$data->get();
+    }
+    /*end if*/
+
+    $from = strtotime('-6 hours');
+    $to = time();
+    if($request->has('starttime'))
+        $from = strtotime($request->get('starttime'));
+
+    if($request->has('endtime'))
+        $to = strtotime($request->get('endtime'));
+
+  $sensor = Sensor::with('Location')->where('external_id',$request->external_id)->first();
+  $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$from, $to]);
+  $data = $data->get();
   /*foreach data only datatime with water height only for json format display graph sensors on map*/
      foreach($data as $key => $value) {  
 
