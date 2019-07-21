@@ -124,6 +124,9 @@ class SensorInfoController extends Controller
     if($request->query->has('end'))
         $end = strtotime($request->query->get('end'));
 
+    $start = date('Y-m-d H:i:s', $start);
+    $end = date('Y-m-d H:i:s', $end);
+
     if($request->query->has('external_id')) {
         $sensor = Sensor::with('Location')->where('external_id', $request->query->get('external_id'))->first();
         $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$start, $end])->get();
