@@ -111,8 +111,8 @@ class SensorInfoController extends Controller
  /*Grap desplay sensor api*/
  public function sensor_event(Request $request){
     /*this if use prevent when users access to sensor_event api without sensor id*/
-    if($request->external_id==null){
-    return "you have no sensor information.";
+    if(!$request->has('external_id') && !$request->has('location')){
+        return "Please provide either sensor or location id";
     }
     /*end if*/
 
@@ -124,11 +124,15 @@ class SensorInfoController extends Controller
     if($request->has('endtime'))
         $to = strtotime($request->get('endtime'));
 
-  $sensor = Sensor::with('Location')->where('external_id',$request->external_id)->first();
-  $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$from, $to]);
-  $data = $data->get();
-  /*foreach data only datatime with water height only for json format display graph sensors on map*/
-     foreach($data as $key => $value) {  
+    if($request->has('external_id')) {
+        $sensor = Sensor::with('Location')->where('external_id', $request->get('external_id'))->first();
+        $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$from, $to])->get();
+    } else {
+        $data = Datapoint::where('location_id', $request->get('location'))->whereBetween('created_at', [$from, $to])->get();
+    }
+
+    /*foreach data only datatime with water height only for json format display graph sensors on map*/
+    foreach($data as $key => $value) {
 
                     $time=$value['created_at'];
                     //add 7 hours for Cambodia format timezone
