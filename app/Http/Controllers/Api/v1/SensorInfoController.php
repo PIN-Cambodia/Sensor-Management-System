@@ -131,27 +131,20 @@ class SensorInfoController extends Controller
         $data = Datapoint::where('location_id', $request->get('location'))->whereBetween('created_at', [$from, $to])->get();
     }
 
+    $records = [];
+
     /*foreach data only datatime with water height only for json format display graph sensors on map*/
     foreach($data as $key => $value) {
+        $time = $value['created_at'];
+        //add 7 hours for Cambodia format timezone
+        $time = $time->modify("+7 hours");
+        $time = $time->format('Y-m-d\TH:i:s');
+        $records[] = array('value' => array($time, $value['water_height']));
+    }
 
-                    $time=$value['created_at'];
-                    //add 7 hours for Cambodia format timezone
-                    $time= $time->modify("+7 hours");
-                    $time= $time->format('Y-m-d\TH:i:s');
-
-                          $record[]=array(
-
-                                          'value' => array($time,$value['water_height']
-                                          )
-                                          );                                         
-                                
-                                  }
-                    //$soArray = json_decode($json, true);
-                      //return $soArray;
-                          return response()->json($record);
-
-     }
-  /*end graph sensor api on map*/
+    return response()->json($records);
+}
+/*end graph sensor api on map*/
 
 
 // /////This function getsensor datapoint for desplay on mapping/////////////////////
