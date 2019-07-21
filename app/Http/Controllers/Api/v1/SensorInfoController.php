@@ -102,8 +102,13 @@ class SensorInfoController extends Controller
 
       // $final_data = json_encode($new_data, JSON_PRETTY_PRINT);
       //use JSON_UNESCAPED_UNICODE when json has khmer values
-      $final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
-    return  $final_data;
+      //$final_data = json_encode($new_data, JSON_UNESCAPED_UNICODE);
+        $headers = array (
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
+
+        return response()->json($new_data , 200, $headers, JSON_UNESCAPED_UNICODE);
     }
 
 
