@@ -118,10 +118,10 @@ class SensorInfoController extends Controller
 
     $start = strtotime('-6 hours');
     $end = time();
-    if($request->query->has('start'))
+    if($request->query->has('start') && strtotime($request->query->get('start')))
         $start = strtotime($request->query->get('start'));
 
-    if($request->query->has('end'))
+    if($request->query->has('end') && strtotime($request->query->get('end')))
         $end = strtotime($request->query->get('end'));
 
     $start = date('Y-m-d H:i:s', $start);
