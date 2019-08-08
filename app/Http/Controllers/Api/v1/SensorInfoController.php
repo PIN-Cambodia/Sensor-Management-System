@@ -217,7 +217,7 @@ class SensorInfoController extends Controller {
 
     /* Create datapoint from users authorization*/
   public function createDatapoint(Request $request)
-  { 
+  {
     //check authorization users on create Datapoint
     // add_datapoints is field name in permissions table
      if(!Gate::allows('add_datapoints')){
@@ -234,10 +234,10 @@ class SensorInfoController extends Controller {
                'data'=>$request->data,
                ];
 
-    if(isset($request->water_height)) { // Generation 2 and 3 Tepmachcha
+    if($request->has('water_height')) { // Generation 2 and 3 Tepmachcha
         $arrdata['water_height'] = $request->water_height;
-    } elseif ($request->has('Water level')) { // Generation 1 AAC Ground water sensor
-        $arrdata['water_height'] = $request->get('Water level');
+    } elseif ($request->has('Water_level')) { // Generation 1 AAC Ground water sensor
+        $arrdata['water_height'] = $request->Water_level;
     } else { // Generation 1 Tepmachcha
         $arrdata['water_height'] = $sensor->location[0]->sensor_height - $request->distance_report;
     }
