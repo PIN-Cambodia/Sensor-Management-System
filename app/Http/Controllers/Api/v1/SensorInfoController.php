@@ -10,16 +10,12 @@ use \DateTime;
 use App\Location;
 use App\Datapoint;
 use App\Sensor;
-class SensorInfoController extends Controller
-{
-  public function getLocation(Request $request)
-    {
-     
-      if($request->type==null)
-        /*Get all data by table Locations join with Sensors*/
-           $location=Location::with('Sensor')->get();
+class SensorInfoController extends Controller {
+  public function getLocation(Request $request) {
+      if(!$request->query->has('type'))
+          $location = Location::with('Sensor')->get();
       else
-           $location=Location::with('Sensor')->where('type',$request->type)->get();  
+          $location = Location::with('Sensor')->where('type', $request->query->get('type'))->get();
       
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
@@ -42,6 +38,7 @@ class SensorInfoController extends Controller
           $createDate=$datapoint!=null ? $datapoint->created_at : date("Y-m-d H:i:s");
 
 /*switch condition change icon sensor color  it work with javascript in page map.js*/
+          $features = [];
           switch ($value['status']) {
             case 'Operational':           
               $datetime1 = new DateTime(date("Y-m-d H:i:s"));
@@ -51,12 +48,22 @@ class SensorInfoController extends Controller
 
                 if($hours<24 && $datapoint!=null ) {
                       $status='active';
-                      if($datapoint->water_height>=$value['watch_level'] && $datapoint->water_height<$value['warning_level'])
-                           $status='watch';
-                      else if($datapoint->water_height>=$value['warning_level'] && $datapoint->water_height<$value['severe_level'])
-                           $status='warning';
-                      else if($datapoint->water_height>=$value['severe_level']) 
-                          $status='severe_warning';
+
+                      if($sensor->type == 'River') {
+                          if($datapoint->water_height>=$value['watch_level'] && $datapoint->water_height<$value['warning_level'])
+                               $status='watch';
+                          else if($datapoint->water_height>=$value['warning_level'] && $datapoint->water_height<$value['severe_level'])
+                               $status='warning';
+                          else if($datapoint->water_height>=$value['severe_level'])
+                              $status='severe_warning';
+                      } elseif($sensor->type == 'Ground Water') {
+                          if($datapoint->water_height <= $value['severe_level'])
+                              $status='severe_warning';
+                          else if($datapoint->water_height <= $value['warning_level'])
+                              $status='warning';
+                          else if($datapoint->water_height <= $value['watch_level'])
+                              $status='watch';
+                      }
                   }
                 else
                     $status='inactive';
@@ -81,8 +88,6 @@ class SensorInfoController extends Controller
                                     'name' => $value['name'],
                                     'namekh'=>$namekh,
                                     'external_id'=>$sensor['external_id'], 
-                                    'sensor_height'=> ($datapoint!=null ? $datapoint->sensor_height : NULL), 
-                                    'distance_report'=>($datapoint!=null ? $datapoint->distance_report : NULL),                         
                                     'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
                                     'status1'=>$value['status'],
                                     'status'=>$status,
@@ -222,19 +227,19 @@ class SensorInfoController extends Controller
 
     $sensor=Sensor::with('Location')->where('external_id',$request->external_id)->first();
 
-    $arrdata=
+    $arrdata =
               [
                'sensor_id'=>$sensor->id,
                'location_id'=>$sensor->location[0]->id,
                'data'=>$request->data,
-               'sensor_height'=>$sensor->location[0]->sensor_height,
-               'distance_report'=>$request->distance_report,
                ];
 
-    if(isset($request->water_height)) {
+    if(isset($request->water_height)) { // Generation 2 and 3 Tepmachcha
         $arrdata['water_height'] = $request->water_height;
-    } else {
-        $arrdata['water_height'] = $arrdata['sensor_height'] - $arrdata['distance_report'];
+    } elseif ($request->query->get('Water level')) { // Generation 1 AAC Ground water sensor
+        $arrdata['water_height'] = $request->query->get('Water level');
+    } else { // Generation 1 Tepmachcha
+        $arrdata['water_height'] = $sensor->location[0]->sensor_height - $request->distance_report;
     }
 
               
