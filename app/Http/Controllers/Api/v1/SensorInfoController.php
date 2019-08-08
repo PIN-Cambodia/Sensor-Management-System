@@ -236,8 +236,8 @@ class SensorInfoController extends Controller {
 
     if(isset($request->water_height)) { // Generation 2 and 3 Tepmachcha
         $arrdata['water_height'] = $request->water_height;
-    } elseif ($request->query->get('Water level')) { // Generation 1 AAC Ground water sensor
-        $arrdata['water_height'] = $request->query->get('Water level');
+    } elseif ($request->has('Water level')) { // Generation 1 AAC Ground water sensor
+        $arrdata['water_height'] = $request->get('Water level');
     } else { // Generation 1 Tepmachcha
         $arrdata['water_height'] = $sensor->location[0]->sensor_height - $request->distance_report;
     }
