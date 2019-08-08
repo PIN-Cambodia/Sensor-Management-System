@@ -16,7 +16,8 @@ class SensorInfoController extends Controller {
           $location = Location::with('Sensor')->get();
       else
           $location = Location::with('Sensor')->where('type', $request->query->get('type'))->get();
-      
+
+      $features = [];
       /* Generate json format follow  by http://geojson.org/ */
       foreach($location as $key => $value) {         
           
@@ -38,7 +39,6 @@ class SensorInfoController extends Controller {
           $createDate=$datapoint!=null ? $datapoint->created_at : date("Y-m-d H:i:s");
 
 /*switch condition change icon sensor color  it work with javascript in page map.js*/
-          $features = [];
           switch ($value['status']) {
             case 'Operational':           
               $datetime1 = new DateTime(date("Y-m-d H:i:s"));
@@ -51,28 +51,28 @@ class SensorInfoController extends Controller {
 
                       if($sensor->type == 'River') {
                           if($datapoint->water_height>=$value['watch_level'] && $datapoint->water_height<$value['warning_level'])
-                               $status='watch';
+                               $status = 'watch';
                           else if($datapoint->water_height>=$value['warning_level'] && $datapoint->water_height<$value['severe_level'])
-                               $status='warning';
+                               $status = 'warning';
                           else if($datapoint->water_height>=$value['severe_level'])
-                              $status='severe_warning';
+                              $status ='severe_warning';
                       } elseif($sensor->type == 'Ground Water') {
                           if($datapoint->water_height <= $value['severe_level'])
-                              $status='severe_warning';
+                              $status = 'severe_warning';
                           else if($datapoint->water_height <= $value['warning_level'])
-                              $status='warning';
+                              $status = 'warning';
                           else if($datapoint->water_height <= $value['watch_level'])
-                              $status='watch';
+                              $status = 'watch';
                       }
                   }
                 else
-                    $status='inactive';
+                    $status = 'inactive';
               break;
             case 'planed':
-               $status=$value['status'];
+               $status = $value['status'];
               break;
             default:
-               $status='inactive';
+               $status = 'inactive';
               break;
           }
 /*end switch*/
