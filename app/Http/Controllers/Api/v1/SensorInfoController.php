@@ -56,7 +56,7 @@ class SensorInfoController extends Controller {
                                $status = 'warning';
                           else if($datapoint->water_height>=$value['severe_level'])
                               $status ='severe_warning';
-                      } elseif($sensor->type == 'Ground Water') {
+                      } elseif($sensor->type == 'Ground water') {
                           if($datapoint->water_height <= $value['severe_level'])
                               $status = 'severe_warning';
                           else if($datapoint->water_height <= $value['warning_level'])
