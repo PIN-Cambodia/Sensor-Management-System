@@ -19,10 +19,10 @@ class SensorInfoController extends Controller {
 
       $features = [];
       /* Generate json format follow  by http://geojson.org/ */
-      foreach($location as $key => $value) {         
-          
+      foreach($location as $key => $value) {
+
           /* get translation in khmer for feild name and comment by location*/
-          $translatekh = Location::withTranslations(['kh'])->where('id',(int) $value['id'])->get();    
+          $translatekh = Location::withTranslations(['kh'])->where('id',(int) $value['id'])->get();
           $translatekh = $translatekh->translate('kh', 'fallbackLocale');
           $namekh= $translatekh[0]->name;
           $commenkh=$translatekh[0]->comment;
@@ -32,18 +32,18 @@ class SensorInfoController extends Controller {
           $sensor=$value['sensor'];
 
           /* get the last information of datapoint in the location */
-          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();    
+          $datapoint=Datapoint::where('location_id',$value['id'])->orderby('id','desc')->first();
          // formate geojson
          //return $datapoint;
-          $status='';       
+          $status='';
           $createDate=$datapoint!=null ? $datapoint->created_at : date("Y-m-d H:i:s");
 
 /*switch condition change icon sensor color  it work with javascript in page map.js*/
           switch ($value['status']) {
-            case 'Operational':           
+            case 'Operational':
               $datetime1 = new DateTime(date("Y-m-d H:i:s"));
               $datetime2 = new DateTime($createDate);
-              //call function GetHourFromDate 
+              //call function GetHourFromDate
               $hours=$this->GetHourFromDate($datetime1,$datetime2);
 
                 if($hours<24 && $datapoint!=null ) {
@@ -87,7 +87,7 @@ class SensorInfoController extends Controller {
                                     'id'=> $value['id'],
                                     'name' => $value['name'],
                                     'namekh'=>$namekh,
-                                    'external_id'=>$sensor['external_id'], 
+                                    'external_id'=>$sensor['external_id'],
                                     'water_height'=>($datapoint!=null ? $datapoint->water_height : NULL),
                                     'status1'=>$value['status'],
                                     'status'=>$status,
@@ -175,8 +175,8 @@ class SensorInfoController extends Controller {
                $data=$data->orderby('created_at','desc')->take($request->n_record);
                $data=$data->get();
 
-                foreach($data as $key => $value) {  
-                    
+                foreach($data as $key => $value) {
+
                                       $record[]=array(
                                                       'type'=>'record',
                                                       'id'=>$value['id'],
@@ -202,16 +202,16 @@ class SensorInfoController extends Controller {
 
           //$data=Datapoint::find(1)->Sensor()->get();
          //$data=Datapoint::with('Sensor')->get();
-         // $data=Datapoint::with('Sensor')->get();        
+         // $data=Datapoint::with('Sensor')->get();
          /* no get detail Sensor */
-         //$data=Sensor::where('external_id',$request->external_id)->firstOrFail()->Datapoint()->get(); 
+         //$data=Sensor::where('external_id',$request->external_id)->firstOrFail()->Datapoint()->get();
   }
 
     function validateDate($date, $format = 'Y-m-d H:i:s')
     {
         $d = DateTime::createFromFormat($format, $date);
         return $d && $d->format($format) == $date;
-    } 
+    }
 
 
 
@@ -242,20 +242,42 @@ class SensorInfoController extends Controller {
         $arrdata['water_height'] = $sensor->location[0]->sensor_height - $request->distance_report;
     }
 
-              
+
        $validator = Validator::make($request->all(), [
             /*'sensor_id' => 'required',
-            'location_id' => 'required', */    
+            'location_id' => 'required', */
 
               ]);
-        
+
 
         if ($validator->fails()) {
             return response()->json(['status'=>false,'message'=>$validator->messages()]);
         }
 
         else{
-                $datapoint=Datapoint::create($arrdata);        
+                $datapoint = Datapoint::create($arrdata);
+
+                // For river sensors, initiate automatic alert to phone numbers if the prewarning trigger has been reached 3 times in a row
+                if($sensor->type == 'River') {
+                    $datapoints = Datapoint::where('location_id', $sensor->location[0]->id)->orderby('id','desc')->take(3)->get();
+                    $sendAlert = false;
+                    foreach($datapoints as $datapoint) {
+                        if($datapoint->water_height >= $sensor->location[0]->pre_warning_level) {
+                            $sendAlert = true;
+                        }
+                        // If just one of the points is below the level, don't send warning
+                        else {
+                            $sendAlert = false;
+                            break;
+                        }
+                    }
+                    // If we should send an alert, and it's been more than 24 hours since the last alert, send one now.
+                    if($sendAlert && $sensor->location[0]->pre_warning_last_issued < time()-60*60*24) {
+                        $sensor->location[0]->update(['pre_warning_last_issued' => time()]);
+                        file_get_contents('http://ews1294.info/wp-admin/admin-ajax.php?action=sensor_alert&phonenumbers=' . urlencode($sensor->location[0]->pre_warning_phone_numbers));
+                    }
+                }
+
                 return response()->json(['status'=>true,'message'=>"Record created successfully",'data'=>$arrdata]);
         }
 
@@ -296,9 +318,9 @@ class SensorInfoController extends Controller {
           else
           {
                 $sensor=Sensor::find($id);
-                $sensor->update($arrdata);        
+                $sensor->update($arrdata);
                 return response()->json(['status'=>true,'message'=>"Record updated successfully",'data'=>$arrdata]);
-          }   
+          }
     }
 
     /**
@@ -329,7 +351,7 @@ class SensorInfoController extends Controller {
   public  function GetHourFromDate($datetime1,$datetime2){
 
       $datetime1->modify("+7 hours");
-      $datetime1->format("Y-m-d H:i");      
+      $datetime1->format("Y-m-d H:i");
       $interval = $datetime1->diff($datetime2);
       $hours = $interval->h;
       $hours = $hours + ($interval->days*24);
