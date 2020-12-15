@@ -258,7 +258,7 @@ class SensorInfoController extends Controller {
                 $datapoint = Datapoint::create($arrdata);
 
                 // For river sensors, initiate automatic alert to phone numbers if the prewarning trigger has been reached 3 times in a row
-                if($sensor->type == 'River') {
+                if($sensor->type == 'River' && $sensor->location[0]->pre_warning_level > 0) {
                     $datapoints = Datapoint::where('location_id', $sensor->location[0]->id)->orderby('id','desc')->take(3)->get();
                     $sendAlert = false;
                     foreach($datapoints as $datapoint) {
