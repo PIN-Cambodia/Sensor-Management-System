@@ -120,11 +120,6 @@ class SensorInfoController extends Controller {
  /* Get information of Sensor Datapoint */
  /*Grap desplay sensor api*/
  public function sensor_event(Request $request){
-    /*this if use prevent when users access to sensor_event api without sensor id*/
-    if(!$request->query->has('external_id') && !$request->query->has('location')){
-        return "Please provide either sensor or location id";
-    }
-    /*end if*/
 
     $start = strtotime('-6 hours');
     $end = time();
@@ -140,8 +135,10 @@ class SensorInfoController extends Controller {
     if($request->query->has('external_id')) {
         $sensor = Sensor::with('Location')->where('external_id', $request->query->get('external_id'))->first();
         $data = Datapoint::where('sensor_id', $sensor->id)->whereBetween('created_at', [$start, $end])->get();
-    } else {
+    } elseif($request->query->has('location')) {
         $data = Datapoint::where('location_id', $request->query->get('location'))->whereBetween('created_at', [$start, $end])->get();
+    } else {
+        $data = Datapoint::whereBetween('created_at', [$start, $end])->get();
     }
 
     $records = [];
