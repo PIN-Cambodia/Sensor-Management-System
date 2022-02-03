@@ -149,7 +149,7 @@ class SensorInfoController extends Controller {
         //add 7 hours for Cambodia format timezone
         $time = $time->modify("+7 hours");
         $time = $time->format('Y-m-d\TH:i:s');
-        $records[] = array('value' => array($time, $value['water_height']));
+        $records[] = array('value' => array($time, $value['water_height']), 'location_id' => $value['location_id']);
     }
 
     return response()->json($records);
