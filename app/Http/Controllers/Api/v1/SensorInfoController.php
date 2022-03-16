@@ -92,6 +92,7 @@ class SensorInfoController extends Controller {
                                     'status1'=>$value['status'],
                                     'status'=>$status,
                                     'type'=>$value['Type'],
+                                    'sensor_height' => $value['sensor_height'],
                                     'comment'=>$value['comment'],
                                      'commentkh'=>$commenkh,
                                     'trigger_levels'=>array('severe_warning'=>$value['severe_level'],'warning'=>$value['warning_level'],'watch_level'=>$value['watch_level']),
